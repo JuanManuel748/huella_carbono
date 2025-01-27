@@ -1,38 +1,47 @@
 package com.github.JuanManuel;
 
+import com.github.JuanManuel.view.AppController;
+import com.github.JuanManuel.view.Scenes;
+import com.github.JuanManuel.view.View;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
 /**
- * JavaFX App
+ * The main class of the application. It extends the JavaFX Application class and
+ * is the entry point of the application.
  */
 public class App extends Application {
-
-    private static Scene scene;
-
-    @Override
-    public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
+    public static Scene scene;
+    public static Stage stage;
+    public static AppController currentController;
 
     public static void main(String[] args) {
         launch();
     }
 
+    public static Stage getPrimaryStage() {
+        return stage;
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        stage = primaryStage;
+
+        View view = AppController.loadFXML(Scenes.ROOT);
+
+        scene = new Scene(view.scene, 800, 600);
+
+        currentController = (AppController) view.controller;
+        currentController.onOpen(null);
+
+        stage.setScene(scene);
+        stage.setTitle("Huella de Carbono");
+        //stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/github/JuanManuel/view/images/logoBlanco.png")));
+        stage.show();
+    }
 }
