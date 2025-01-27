@@ -55,4 +55,13 @@ public class Recomendacion {
         this.impactoEstimado = impactoEstimado;
     }
 
+    @Override
+    public String toString() {
+        return "Recomendacion{" +
+                "id=" + id +
+                ", categoria=" + idCategoria.getNombre() +
+                ", descripcion='" + descripcion + '\'' +
+                ", impactoEstimado=" + impactoEstimado +
+                '}';
+    }
 }
