@@ -2,6 +2,7 @@ package com.github.JuanManuel.model.entity;
 
 public class Session {
     private static Session _instance;
+    private static Usuario currentUser;
 
     private Session() {}
 
@@ -12,5 +13,13 @@ public class Session {
         return _instance;
     }
 
+    public Usuario getCurrentUser() {return currentUser;}
 
+    public void logIn(Usuario usr) {
+        currentUser = usr;
+    }
+
+    public void logOut(Usuario usr) {
+        currentUser = null;
+    }
 }

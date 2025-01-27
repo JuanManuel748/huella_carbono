@@ -77,4 +77,15 @@ public class Habito {
         this.ultimaFecha = ultimaFecha;
     }
 
+    @Override
+    public String toString() {
+        return "Habito{" +
+                "id=" + id +
+                ", usuario=" + idUsuario.getNombre() +
+                ", actividad=" + idActividad.getNombre() +
+                ", frecuencia=" + frecuencia +
+                ", tipo='" + tipo + '\'' +
+                ", ultimaFecha=" + ultimaFecha +
+                '}';
+    }
 }

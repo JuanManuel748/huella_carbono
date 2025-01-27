@@ -72,7 +72,7 @@ public class Actividad {
         return "Actividad{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-                ", idCategoria=" + idCategoria +
+                ", categoria=" + idCategoria.getNombre() +
                 '}';
     }
 }
