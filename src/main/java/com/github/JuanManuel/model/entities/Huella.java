@@ -1,4 +1,4 @@
-package com.github.JuanManuel.model.entity;
+package com.github.JuanManuel.model.entities;
 
 import jakarta.persistence.*;
 
@@ -15,7 +15,7 @@ public class Huella {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario")
-    private com.github.JuanManuel.model.entity.Usuario idUsuario;
+    private com.github.JuanManuel.model.entities.Usuario idUsuario;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_actividad")
@@ -38,11 +38,11 @@ public class Huella {
         this.id = id;
     }
 
-    public com.github.JuanManuel.model.entity.Usuario getIdUsuario() {
+    public com.github.JuanManuel.model.entities.Usuario getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(com.github.JuanManuel.model.entity.Usuario idUsuario) {
+    public void setIdUsuario(com.github.JuanManuel.model.entities.Usuario idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -82,8 +82,8 @@ public class Huella {
     public String toString() {
         return "Huella{" +
                 "id=" + id +
-                ", Usuario=" + idUsuario.getNombre() +
-                ", Actividad=" + idActividad.getNombre() +
+                ", Usuario=" + idUsuario.getId() +
+                ", Actividad=" + idActividad.getId() +
                 ", valor=" + valor +
                 ", unidad='" + unidad + '\'' +
                 ", fecha=" + fecha +

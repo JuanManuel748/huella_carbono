@@ -1,4 +1,4 @@
-package com.github.JuanManuel.model.entity;
+package com.github.JuanManuel.model.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -14,6 +14,14 @@ public class HabitoId implements java.io.Serializable {
 
     @Column(name = "id_actividad", nullable = false)
     private Integer idActividad;
+
+    public HabitoId() {}
+
+    public HabitoId(int idUsuario, int idActividad) {
+        this.idUsuario = idUsuario;
+        this.idActividad = idActividad;
+    }
+
 
     public Integer getIdUsuario() {
         return idUsuario;

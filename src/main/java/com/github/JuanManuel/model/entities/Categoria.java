@@ -1,10 +1,10 @@
-package com.github.JuanManuel.model.entity;
+package com.github.JuanManuel.model.entities;
 
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "categoria")
@@ -24,10 +24,10 @@ public class Categoria {
     private String unidad;
 
     @OneToMany(mappedBy = "idCategoria")
-    private Set<Actividad> actividads = new LinkedHashSet<>();
+    private List<Actividad> actividades = new ArrayList<>();
 
     @OneToMany(mappedBy = "idCategoria")
-    private Set<com.github.JuanManuel.model.entity.Recomendacion> recomendacions = new LinkedHashSet<>();
+    private List<com.github.JuanManuel.model.entities.Recomendacion> recomendaciones = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -61,24 +61,35 @@ public class Categoria {
         this.unidad = unidad;
     }
 
-    public Set<Actividad> getActividads() {
-        return actividads;
+    public List<Actividad> getActividades() {
+        return actividades;
     }
 
-    public void setActividads(Set<Actividad> actividads) {
-        this.actividads = actividads;
+    public void setActividades(List<Actividad> actividads) {
+        this.actividades = actividads;
     }
 
-    public Set<com.github.JuanManuel.model.entity.Recomendacion> getRecomendacions() {
-        return recomendacions;
+    public List<com.github.JuanManuel.model.entities.Recomendacion> getRecomendaciones() {
+        return recomendaciones;
     }
 
-    public void setRecomendacions(Set<com.github.JuanManuel.model.entity.Recomendacion> recomendacions) {
-        this.recomendacions = recomendacions;
+    public void setRecomendaciones(List<com.github.JuanManuel.model.entities.Recomendacion> recomendacions) {
+        this.recomendaciones = recomendacions;
     }
 
     @Override
     public String toString() {
+        return "Categoria{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", factorEmision=" + factorEmision +
+                ", unidad='" + unidad + '\'' +
+                ", actividades=" + actividades +
+                ", recomendaciones=" + recomendaciones +
+                '}';
+    }
+
+    public String print() {
         return "Categoria{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +

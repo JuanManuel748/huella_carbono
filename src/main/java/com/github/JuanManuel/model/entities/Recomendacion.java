@@ -1,4 +1,4 @@
-package com.github.JuanManuel.model.entity;
+package com.github.JuanManuel.model.entities;
 
 import jakarta.persistence.*;
 
@@ -59,7 +59,7 @@ public class Recomendacion {
     public String toString() {
         return "Recomendacion{" +
                 "id=" + id +
-                ", categoria=" + idCategoria.getNombre() +
+                ", categoria=" + idCategoria.getId() +
                 ", descripcion='" + descripcion + '\'' +
                 ", impactoEstimado=" + impactoEstimado +
                 '}';
