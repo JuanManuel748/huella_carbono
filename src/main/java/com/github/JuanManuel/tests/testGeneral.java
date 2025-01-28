@@ -1,8 +1,6 @@
-package com.github.JuanManuel.test;
+package com.github.JuanManuel.tests;
 
-import com.github.JuanManuel.model.entity.Actividad;
-import com.github.JuanManuel.model.entity.Categoria;
-import com.github.JuanManuel.model.entity.Usuario;
+import com.github.JuanManuel.model.entities.Categoria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

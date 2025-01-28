@@ -1,4 +1,4 @@
-package com.github.JuanManuel.model.entity;
+package com.github.JuanManuel.model.entities;
 
 import jakarta.persistence.*;
 
@@ -13,7 +13,7 @@ public class Habito {
     @MapsId("idUsuario")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_usuario", nullable = false)
-    private com.github.JuanManuel.model.entity.Usuario idUsuario;
+    private com.github.JuanManuel.model.entities.Usuario idUsuario;
 
     @MapsId("idActividad")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -37,11 +37,11 @@ public class Habito {
         this.id = id;
     }
 
-    public com.github.JuanManuel.model.entity.Usuario getIdUsuario() {
+    public com.github.JuanManuel.model.entities.Usuario getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(com.github.JuanManuel.model.entity.Usuario idUsuario) {
+    public void setIdUsuario(com.github.JuanManuel.model.entities.Usuario idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -81,8 +81,8 @@ public class Habito {
     public String toString() {
         return "Habito{" +
                 "id=" + id +
-                ", usuario=" + idUsuario.getNombre() +
-                ", actividad=" + idActividad.getNombre() +
+                ", usuario=" + idUsuario.getId() +
+                ", actividad=" + idActividad.getId() +
                 ", frecuencia=" + frecuencia +
                 ", tipo='" + tipo + '\'' +
                 ", ultimaFecha=" + ultimaFecha +

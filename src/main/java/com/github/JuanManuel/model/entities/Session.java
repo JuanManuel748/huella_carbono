@@ -1,4 +1,4 @@
-package com.github.JuanManuel.model.entity;
+package com.github.JuanManuel.model.entities;
 
 public class Session {
     private static Session _instance;

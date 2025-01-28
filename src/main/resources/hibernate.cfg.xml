@@ -19,13 +19,13 @@
     <property name="hibernate.show_sql">false</property>
     <property name="hibernate.format_sql">true</property>
 
-    <mapping class="com.github.JuanManuel.model.entity.Usuario"/>
-    <mapping class="com.github.JuanManuel.model.entity.Actividad"/>
-    <mapping class="com.github.JuanManuel.model.entity.Categoria"/>
-    <mapping class="com.github.JuanManuel.model.entity.Habito"/>
-    <mapping class="com.github.JuanManuel.model.entity.Huella"/>
-    <mapping class="com.github.JuanManuel.model.entity.Recomendacion"/>
-    <mapping class="com.github.JuanManuel.model.entity.HabitoId"/>
+    <mapping class="com.github.JuanManuel.model.entities.Usuario"/>
+    <mapping class="com.github.JuanManuel.model.entities.Actividad"/>
+    <mapping class="com.github.JuanManuel.model.entities.Categoria"/>
+    <mapping class="com.github.JuanManuel.model.entities.Habito"/>
+    <mapping class="com.github.JuanManuel.model.entities.Huella"/>
+    <mapping class="com.github.JuanManuel.model.entities.Recomendacion"/>
+    <mapping class="com.github.JuanManuel.model.entities.HabitoId"/>
 
   </session-factory>
 </hibernate-configuration>

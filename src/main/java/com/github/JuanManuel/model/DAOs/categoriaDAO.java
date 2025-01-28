@@ -1,9 +1,7 @@
-package com.github.JuanManuel.model.DAO;
+package com.github.JuanManuel.model.DAOs;
 
-import com.github.JuanManuel.model.entity.Usuario;
+import com.github.JuanManuel.model.entities.Categoria;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 import java.io.IOException;
@@ -11,11 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class usuarioDAO implements DAO<Usuario> {
-    public static SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+public class categoriaDAO implements DAO<Categoria> {
 
     @Override
-    public Usuario save(Usuario entity) {
+    public Categoria save(Categoria entity) {
         Session sn = sessionFactory.openSession();
         sn.beginTransaction();
         sn.save(entity);
@@ -25,7 +22,7 @@ public class usuarioDAO implements DAO<Usuario> {
     }
 
     @Override
-    public Usuario delete(Usuario entity) throws SQLException {
+    public Categoria delete(Categoria entity) throws SQLException {
         Session sn = sessionFactory.openSession();
         sn.beginTransaction();
         sn.delete(entity);
@@ -35,33 +32,32 @@ public class usuarioDAO implements DAO<Usuario> {
     }
 
     @Override
-    public Usuario findByPK(Usuario pk) {
+    public Categoria findByPK(Categoria pk) {
         Session sn = sessionFactory.openSession();
-        Usuario usr = new Usuario();
+        Categoria result = new Categoria();
         sn.beginTransaction();
-        usr = sn.get(Usuario.class, pk.getId());
+        result = sn.get(Categoria.class, pk.getId());
         sn.getTransaction().commit();
-
         sn.close();
-        return usr;
+        return result;
     }
 
     @Override
-    public List<Usuario> findAll() {
+    public List<Categoria> findAll() {
         Session sn = sessionFactory.openSession();
-        List<Usuario> ls = new ArrayList<>();
-        Query<Usuario> allUsers = sn.createQuery("from Usuario", Usuario.class);
-        ls = allUsers.list();
+        List<Categoria> ls = new ArrayList<>();
+        Query<Categoria> all = sn.createQuery("from Categoria", Categoria.class);
+        ls = all.list();
+        sn.close();
         return ls;
     }
-
 
     @Override
     public void close() throws IOException {
 
     }
-
-    public static usuarioDAO build() {
-        return new usuarioDAO();
+    public static categoriaDAO build() {
+        return new categoriaDAO();
     }
+
 }

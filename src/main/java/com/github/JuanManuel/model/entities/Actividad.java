@@ -1,9 +1,9 @@
-package com.github.JuanManuel.model.entity;
+package com.github.JuanManuel.model.entities;
 
 import jakarta.persistence.*;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "actividad")
@@ -18,13 +18,13 @@ public class Actividad {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_categoria")
-    private com.github.JuanManuel.model.entity.Categoria idCategoria;
+    private com.github.JuanManuel.model.entities.Categoria idCategoria;
 
     @OneToMany(mappedBy = "idActividad")
-    private Set<com.github.JuanManuel.model.entity.Habito> habitos = new LinkedHashSet<>();
+    private List<com.github.JuanManuel.model.entities.Habito> habitos = new ArrayList<>();
 
     @OneToMany(mappedBy = "idActividad")
-    private Set<com.github.JuanManuel.model.entity.Huella> huellas = new LinkedHashSet<>();
+    private List<com.github.JuanManuel.model.entities.Huella> huellas = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -42,27 +42,27 @@ public class Actividad {
         this.nombre = nombre;
     }
 
-    public com.github.JuanManuel.model.entity.Categoria getIdCategoria() {
+    public com.github.JuanManuel.model.entities.Categoria getIdCategoria() {
         return idCategoria;
     }
 
-    public void setIdCategoria(com.github.JuanManuel.model.entity.Categoria idCategoria) {
+    public void setIdCategoria(com.github.JuanManuel.model.entities.Categoria idCategoria) {
         this.idCategoria = idCategoria;
     }
 
-    public Set<com.github.JuanManuel.model.entity.Habito> getHabitos() {
+    public List<com.github.JuanManuel.model.entities.Habito> getHabitos() {
         return habitos;
     }
 
-    public void setHabitos(Set<com.github.JuanManuel.model.entity.Habito> habitos) {
+    public void setHabitos(List<com.github.JuanManuel.model.entities.Habito> habitos) {
         this.habitos = habitos;
     }
 
-    public Set<com.github.JuanManuel.model.entity.Huella> getHuellas() {
+    public List<com.github.JuanManuel.model.entities.Huella> getHuellas() {
         return huellas;
     }
 
-    public void setHuellas(Set<com.github.JuanManuel.model.entity.Huella> huellas) {
+    public void setHuellas(List<com.github.JuanManuel.model.entities.Huella> huellas) {
         this.huellas = huellas;
     }
 
@@ -72,7 +72,7 @@ public class Actividad {
         return "Actividad{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-                ", categoria=" + idCategoria.getNombre() +
+                ", categoria=" + idCategoria.getId() +
                 '}';
     }
 }
