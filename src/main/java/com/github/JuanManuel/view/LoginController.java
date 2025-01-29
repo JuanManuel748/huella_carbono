@@ -1,7 +1,9 @@
 package com.github.JuanManuel.view;
 
 import com.github.JuanManuel.App;
+import com.github.JuanManuel.model.entities.Session;
 import com.github.JuanManuel.model.entities.Usuario;
+import com.github.JuanManuel.model.services.usuarioService;
 import com.github.JuanManuel.utils.HashPass;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +19,7 @@ public class LoginController extends Controller implements Initializable {
     private TextField passwordField;
 
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9]+@[a-zA-Z]+\\.(com|es)$";
+
     /**
      * Called when the view is opened. This method is intended for any setup or initialization
      * operations when the controller is first initialized. In this case, it's empty.
@@ -56,7 +59,22 @@ public class LoginController extends Controller implements Initializable {
             String password = HashPass.hashPassword(passwordField.getText());
 
             if (validateFields(email, password)) {
-                Usuario tempUser = null;
+                Usuario u = new Usuario();
+                u.setEmail(email);
+                u.setContraseña(password);
+                Usuario tempUser = usuarioService.build().findByPK(u);
+                if (tempUser != null) {
+                    if (password.equals(tempUser.getContraseña())) {
+                        Session.getInstance().logIn(tempUser);
+                        App.currentController.changeScene(Scenes.HOME, null);
+                    } else {
+                        Alert.showAlert("ERROR", "Contraseña equivocada", "La contraseña y el usuario no coinciden con nuestra base de datos");
+                        System.out.println("CONTRASEÑA INTRODUCIDA: " + password);
+                        System.out.println("CONTRASEÑA: " + tempUser.getContraseña());
+                    }
+                } else {
+                    Alert.showAlert("ERROR", "Usuario no encontrado", "No hemos podido encontrar al usuario en nuestra base de datos");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,12 +84,10 @@ public class LoginController extends Controller implements Initializable {
 
     private boolean validateFields(String email, String password) {
         boolean rs = false;
-        if (email.isEmpty() || password.isEmpty()) {
-            if (email.matches(EMAIL_REGEX)) {
-                rs = true;
-            }
+        if (!email.isEmpty() && !password.isEmpty()) {
+            rs = true;
         } else {
-            rs = false;
+            Alert.showAlert("ERROR", "Campos vacíos", "Rellene todos los campos, por favor");
         }
         return rs;
     }

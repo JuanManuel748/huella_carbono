@@ -10,6 +10,9 @@ public enum Scenes {
     LOGIN("view/login.fxml"),
     REGISTER("view/register.fxml"),
 
+    HOME("view/home.fxml"),
+    PROFILE("view/profile.fxml"),
+
 
 
 
