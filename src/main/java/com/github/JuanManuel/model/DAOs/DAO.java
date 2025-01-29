@@ -13,9 +13,11 @@ import java.util.List;
 public interface DAO<O> extends Closeable {
     public static SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
-    O save(O entity);
+    boolean insert(O entity);
 
-    O delete(O entity) throws SQLException;
+    boolean update(O entity);
+
+    boolean delete(O entity) throws SQLException;
 
     O findByPK(O pk);
 

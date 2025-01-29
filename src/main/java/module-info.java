@@ -9,6 +9,10 @@ module com.github.JuanManuel {
 
     opens com.github.JuanManuel to javafx.fxml;
     opens com.github.JuanManuel.model.connection to java.xml.bind;
+    opens com.github.JuanManuel.view to javafx.fxml;
     opens com.github.JuanManuel.model.entities;
+
     exports com.github.JuanManuel;
+    exports com.github.JuanManuel.view;
+    exports com.github.JuanManuel.model.entities;
 }

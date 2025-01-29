@@ -11,24 +11,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class recomendacionDAO implements DAO<Recomendacion>{
+
     @Override
-    public Recomendacion save(Recomendacion entity) {
+    public boolean insert(Recomendacion entity) {
         Session sn = sessionFactory.openSession();
         sn.beginTransaction();
-        sn.save(entity);
+        sn.persist(entity);
         sn.getTransaction().commit();
         sn.close();
-        return entity;
+        return true;
     }
 
     @Override
-    public Recomendacion delete(Recomendacion entity) throws SQLException {
+    public boolean update(Recomendacion entity) {
+        Session sn = sessionFactory.openSession();
+        sn.beginTransaction();
+        sn.update(entity);
+        sn.getTransaction().commit();
+        sn.close();
+        return true;
+    }
+
+    @Override
+    public boolean delete(Recomendacion entity) throws SQLException {
         Session sn = sessionFactory.openSession();
         sn.beginTransaction();
         sn.delete(entity);
         sn.getTransaction().commit();
         sn.close();
-        return entity;
+        return true;
     }
 
     @Override

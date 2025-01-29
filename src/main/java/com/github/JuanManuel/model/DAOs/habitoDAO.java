@@ -14,23 +14,33 @@ import java.util.List;
 public class habitoDAO implements DAO<Habito> {
 
     @Override
-    public Habito save(Habito entity) {
+    public boolean insert(Habito entity) {
         Session sn = sessionFactory.openSession();
         sn.beginTransaction();
-        sn.save(entity);
+        sn.persist(entity);
         sn.getTransaction().commit();
         sn.close();
-        return entity;
+        return true;
     }
 
     @Override
-    public Habito delete(Habito entity) throws SQLException {
+    public boolean update(Habito entity) {
+        Session sn = sessionFactory.openSession();
+        sn.beginTransaction();
+        sn.update(entity);
+        sn.getTransaction().commit();
+        sn.close();
+        return true;
+    }
+
+    @Override
+    public boolean delete(Habito entity) throws SQLException {
         Session sn = sessionFactory.openSession();
         sn.beginTransaction();
         sn.delete(entity);
         sn.getTransaction().commit();
         sn.close();
-        return entity;
+        return true;
     }
 
     @Override

@@ -12,26 +12,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class usuarioDAO implements DAO<Usuario> {
-    public static SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
     @Override
-    public Usuario save(Usuario entity) {
+    public boolean insert(Usuario entity) {
         Session sn = sessionFactory.openSession();
         sn.beginTransaction();
-        sn.save(entity);
+        sn.persist(entity);
         sn.getTransaction().commit();
         sn.close();
-        return entity;
+        return true;
     }
 
     @Override
-    public Usuario delete(Usuario entity) throws SQLException {
+    public boolean update(Usuario entity) {
+        Session sn = sessionFactory.openSession();
+        sn.beginTransaction();
+        sn.update(entity);
+        sn.getTransaction().commit();
+        sn.close();
+        return true;
+    }
+
+    @Override
+    public boolean delete(Usuario entity) throws SQLException {
         Session sn = sessionFactory.openSession();
         sn.beginTransaction();
         sn.delete(entity);
         sn.getTransaction().commit();
         sn.close();
-        return entity;
+        return true;
     }
 
     @Override

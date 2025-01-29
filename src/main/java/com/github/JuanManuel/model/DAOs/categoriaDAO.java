@@ -12,23 +12,33 @@ import java.util.List;
 public class categoriaDAO implements DAO<Categoria> {
 
     @Override
-    public Categoria save(Categoria entity) {
+    public boolean insert(Categoria entity) {
         Session sn = sessionFactory.openSession();
         sn.beginTransaction();
-        sn.save(entity);
+        sn.persist(entity);
         sn.getTransaction().commit();
         sn.close();
-        return entity;
+        return true;
     }
 
     @Override
-    public Categoria delete(Categoria entity) throws SQLException {
+    public boolean update(Categoria entity) {
+        Session sn = sessionFactory.openSession();
+        sn.beginTransaction();
+        sn.update(entity);
+        sn.getTransaction().commit();
+        sn.close();
+        return true;
+    }
+
+    @Override
+    public boolean delete(Categoria entity) throws SQLException {
         Session sn = sessionFactory.openSession();
         sn.beginTransaction();
         sn.delete(entity);
         sn.getTransaction().commit();
         sn.close();
-        return entity;
+        return true;
     }
 
     @Override
@@ -50,6 +60,18 @@ public class categoriaDAO implements DAO<Categoria> {
         ls = all.list();
         sn.close();
         return ls;
+    }
+
+    public Categoria findByName(Categoria entity) {
+        Session sn = sessionFactory.openSession();
+        Categoria result = new Categoria();
+        sn.beginTransaction();
+        Query<Categoria> query = sn.createQuery("from Categoria where nombre = :nombre", Categoria.class);
+        query.setParameter("nombre", entity.getNombre());
+        result = query.uniqueResult();
+        sn.getTransaction().commit();
+        sn.close();
+        return result;
     }
 
     @Override

@@ -21,6 +21,9 @@ SET time_zone = "+00:00";
 -- Base de datos: `huella_carbono_db`
 --
 
+    DROP DATABASE IF EXISTS `huella_carbono_db`;
+CREATE DATABASE `huella_carbono_db`;
+USE `huella_carbono_db`;
 -- --------------------------------------------------------
 
 --
@@ -227,32 +230,99 @@ ALTER TABLE `usuario`
 --
 -- Restricciones para tablas volcadas
 --
-
---
 -- Filtros para la tabla `actividad`
 --
 ALTER TABLE `actividad`
-  ADD CONSTRAINT `actividad_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`);
+    ADD CONSTRAINT `actividad_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`) ON UPDATE CASCADE ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `habito`
 --
 ALTER TABLE `habito`
-  ADD CONSTRAINT `habito_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
-  ADD CONSTRAINT `habito_ibfk_2` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id_actividad`);
+    ADD CONSTRAINT `habito_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON UPDATE CASCADE ON DELETE CASCADE,
+  ADD CONSTRAINT `habito_ibfk_2` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id_actividad`) ON UPDATE CASCADE ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `huella`
 --
 ALTER TABLE `huella`
-  ADD CONSTRAINT `huella_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
-  ADD CONSTRAINT `huella_ibfk_2` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id_actividad`);
+    ADD CONSTRAINT `huella_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON UPDATE CASCADE ON DELETE CASCADE,
+  ADD CONSTRAINT `huella_ibfk_2` FOREIGN KEY (`id_actividad`) REFERENCES `actividad` (`id_actividad`) ON UPDATE CASCADE ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `recomendacion`
 --
 ALTER TABLE `recomendacion`
-  ADD CONSTRAINT `recomendacion_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`);
+    ADD CONSTRAINT `recomendacion_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`) ON UPDATE CASCADE ON DELETE CASCADE;
+
+--
+-- Volcado de datos para la tabla `actividad`
+--
+
+INSERT INTO `actividad` (`id_actividad`, `nombre`, `id_categoria`) VALUES
+                                                                       (1, 'Conducir coche', 1),
+                                                                       (2, 'Usar transporte público', 1),
+                                                                       (3, 'Viajar en avión', 1),
+                                                                       (4, 'Consumo eléctrico', 2),
+                                                                       (5, 'Consumo de gas', 2),
+                                                                       (6, 'Comer carne de res', 3),
+                                                                       (7, 'Comer alimentos vegetarianos', 3),
+                                                                       (8, 'Generar residuos domésticos', 4),
+                                                                       (9, 'Consumo de agua potable', 5);
+
+--
+-- Volcado de datos para la tabla `categoria`
+--
+
+INSERT INTO `categoria` (`id_categoria`, `nombre`, `factor_emision`, `unidad`) VALUES
+                                                                                   (1, 'Transporte', 0.210, 'Km'),
+                                                                                   (2, 'Energía', 0.233, 'KWh'),
+                                                                                   (3, 'Alimentación', 2.500, 'Kg'),
+                                                                                   (4, 'Residuos', 0.410, 'Kg'),
+                                                                                   (5, 'Agua', 0.350, 'm3');
+
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id_usuario`, `nombre`, `email`, `contraseña`, `fecha_registro`) VALUES
+                                                                                            (1, 'xusma', 'jperram1803b@gmail.com', 'a', '2025-01-27'),
+                                                                                            (2, 'Juan', 'qwerty', '1234', '2025-01-27');
+
+--
+-- Volcado de datos para la tabla `habito`
+--
+
+INSERT INTO `habito` (`id_usuario`, `id_actividad`, `frecuencia`, `tipo`, `ultima_fecha`) VALUES
+                                                                                              (1, 1, 1, 'semanal', '2025-01-26'),
+                                                                                              (2, 1, 2, 'mensual', '2025-01-26'),
+                                                                                              (2, 4, 3, 'semanal', '2025-01-26');
+
+--
+-- Volcado de datos para la tabla `huella`
+--
+
+INSERT INTO `huella` (`id_registro`, `id_usuario`, `id_actividad`, `valor`, `unidad`, `fecha`) VALUES
+                                                                                                   (1, 2, 7, 3.000, 'Kg', '2025-01-26'),
+                                                                                                   (2, 1, 1, 150.000, 'Km', '2025-01-27');
+
+--
+-- Volcado de datos para la tabla `recomendacion`
+--
+
+INSERT INTO `recomendacion` (`id_recomendacion`, `id_categoria`, `descripcion`, `impacto_estimado`) VALUES
+                                                                                                        (1, 1, 'Usa bicicleta o camina en distancias cortas', 30.000),
+                                                                                                        (2, 1, 'Opta por el transporte público en vez del coche', 45.000),
+                                                                                                        (3, 1, 'Compartir coche con compañeros reduce emisiones', 20.000),
+                                                                                                        (4, 2, 'Apaga dispositivos eléctricos cuando no los uses', 10.000),
+                                                                                                        (5, 2, 'Usa bombillas LED en lugar de incandescentes', 15.000),
+                                                                                                        (6, 3, 'Reduce el consumo de carne de res y opta por las vegetales', 50.000),
+                                                                                                        (7, 3, 'Compra productos locales y de temporada', 20.000),
+                                                                                                        (8, 4, 'Recicla residuos para disminuir emisiones', 25.000),
+                                                                                                        (9, 4, 'Reduce el uso de plásticos desechables', 10.000),
+                                                                                                        (10, 5, 'Reduce el tiempo de ducha y ahorra agua', 5.000);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

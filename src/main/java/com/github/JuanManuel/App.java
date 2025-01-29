@@ -31,17 +31,14 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
-
         View view = AppController.loadFXML(Scenes.ROOT);
-
         scene = new Scene(view.scene, 800, 600);
-
         currentController = (AppController) view.controller;
         currentController.onOpen(null);
 
         stage.setScene(scene);
         stage.setTitle("Huella de Carbono");
-        //stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/github/JuanManuel/view/images/logoBlanco.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/github/JuanManuel/assets/logo.png")));
         stage.show();
     }
 }
