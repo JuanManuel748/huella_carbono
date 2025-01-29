@@ -100,19 +100,9 @@ public class actividadService implements service<Actividad>{
                 if (pk.getId() != null) {
                     result = actividadDAO.build().findByPK(pk);
                 }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return result;
-    }
-
-    public Actividad findByName(Actividad entity) {
-        Actividad result = new Actividad();
-        try {
-            if (entity != null) {
-                if (entity.getNombre() != null) {
-                    result = actividadDAO.build().findByName(entity);
+            } else {
+                if (pk.getNombre() != null && !pk.getNombre().isEmpty()) {
+                    result = actividadDAO.build().findByName(pk);
                 }
             }
         } catch (Exception e) {

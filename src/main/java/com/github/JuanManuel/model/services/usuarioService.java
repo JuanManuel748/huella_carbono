@@ -105,6 +105,10 @@ public class usuarioService implements service<Usuario> {
                 if (pk.getId() != null) {
                     result = usuarioDAO.build().findByPK(pk);
                 }
+            } else {
+                if (pk.getEmail() != null && !pk.getEmail().isEmpty()) {
+                    result = usuarioDAO.build().findByEmail(pk.getEmail());
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,17 +116,6 @@ public class usuarioService implements service<Usuario> {
         return result;
     }
 
-    public Usuario findByEmail(String email) {
-        Usuario result = new Usuario();
-        try {
-            if (email != null && !email.isEmpty()) {
-                result = usuarioDAO.build().findByEmail(email);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 
     @Override
     public List<Usuario> findAll() {
