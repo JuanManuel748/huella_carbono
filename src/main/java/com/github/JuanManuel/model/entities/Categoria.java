@@ -84,8 +84,6 @@ public class Categoria {
                 ", nombre='" + nombre + '\'' +
                 ", factorEmision=" + factorEmision +
                 ", unidad='" + unidad + '\'' +
-                ", actividades=" + actividades +
-                ", recomendaciones=" + recomendaciones +
                 '}';
     }
 

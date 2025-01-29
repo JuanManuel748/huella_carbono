@@ -2,11 +2,14 @@ package com.github.JuanManuel.view;
 
 import com.github.JuanManuel.App;
 
+import java.sql.Connection;
+
 /**
  * The abstract Controller class serves as a base class for all controllers in the application.
  * It defines common functionality and provides methods for opening and closing the views.
  */
 public abstract class Controller {
+    protected static Connection SQLconnection = null;
     App app;
 
     /**

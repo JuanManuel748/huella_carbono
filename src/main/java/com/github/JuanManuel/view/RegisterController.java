@@ -6,7 +6,7 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class WelcomeController extends Controller implements Initializable {
+public class RegisterController extends Controller implements Initializable {
     /**
      * Called when the view is opened. This method is intended for any setup or initialization
      * operations when the controller is first initialized. In this case, it's empty.
@@ -36,8 +36,7 @@ public class WelcomeController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void goLogin() throws Exception {
+    public void goToLogin() throws Exception {
         App.currentController.changeScene(Scenes.LOGIN, null);
     }
-
 }

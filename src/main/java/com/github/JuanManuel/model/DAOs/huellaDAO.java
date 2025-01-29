@@ -13,24 +13,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class huellaDAO implements DAO<Huella>{
+
     @Override
-    public Huella save(Huella entity) {
+    public boolean insert(Huella entity) {
         Session sn = sessionFactory.openSession();
         sn.beginTransaction();
-        sn.save(entity);
+        sn.persist(entity);
         sn.getTransaction().commit();
         sn.close();
-        return entity;
+        return true;
     }
 
     @Override
-    public Huella delete(Huella entity) throws SQLException {
+    public boolean update(Huella entity) {
+        Session sn = sessionFactory.openSession();
+        sn.beginTransaction();
+        sn.update(entity);
+        sn.getTransaction().commit();
+        sn.close();
+        return true;
+    }
+
+    @Override
+    public boolean delete(Huella entity) throws SQLException {
         Session sn = sessionFactory.openSession();
         sn.beginTransaction();
         sn.delete(entity);
         sn.getTransaction().commit();
         sn.close();
-        return entity;
+        return true;
     }
 
     @Override
