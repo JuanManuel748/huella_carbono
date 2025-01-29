@@ -90,6 +90,8 @@ public class categoriaService implements service<Categoria> {
         return result;
     }
 
+
+
     @Override
     public Categoria findByPK(Categoria pk) {
         Categoria result = new Categoria();
@@ -98,6 +100,11 @@ public class categoriaService implements service<Categoria> {
                 if (pk.getId() != null) {
                     result = categoriaDAO.build().findByPK(pk);
                 }
+            } else {
+                nombre = pk.getNombre();
+                if (nombre != null && nombre.isEmpty()) {
+                    result = categoriaDAO.build().findByName(pk);
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -105,18 +112,6 @@ public class categoriaService implements service<Categoria> {
         return result;
     }
 
-    public Categoria findByName(Categoria pk) {
-        Categoria result = new Categoria();
-        try {
-            nombre = pk.getNombre();
-            if (nombre != null && !nombre.isEmpty()) {
-                result = categoriaDAO.build().findByName(pk);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return result;
-    }
 
     @Override
     public List<Categoria> findAll() {
