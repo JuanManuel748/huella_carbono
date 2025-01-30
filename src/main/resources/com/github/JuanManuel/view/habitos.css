@@ -1,0 +1,13 @@
+/*
+Background color:  #a8ffb2;
+Text color: #044004;
+Border color: #61e761;
+Font size: 20px;
+emphasis color: #61e761;
+*/
+/* habitos.css */
+.pane {
+    -fx-background-color: #a8ffb2;
+    -fx-text-fill: #044004;
+    -fx-font-size: 20px;
+}

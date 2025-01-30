@@ -33,6 +33,19 @@ public class Usuario {
     @OneToMany(mappedBy = "idUsuario")
     private Set<Huella> huellas = new LinkedHashSet<>();
 
+    public Usuario() {
+
+    }
+
+    public Usuario(int id) {
+        this.id = id;
+    }
+
+    public Usuario(String email) {
+        this.email = email;
+    }
+
+
     public Integer getId() {
         return id;
     }

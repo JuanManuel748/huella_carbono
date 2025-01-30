@@ -18,7 +18,6 @@ public class LoginController extends Controller implements Initializable {
     @FXML
     private TextField passwordField;
 
-    private static final String EMAIL_REGEX = "^[a-zA-Z0-9]+@[a-zA-Z]+\\.(com|es)$";
 
     /**
      * Called when the view is opened. This method is intended for any setup or initialization
@@ -63,7 +62,8 @@ public class LoginController extends Controller implements Initializable {
                 u.setEmail(email);
                 u.setContraseña(password);
                 Usuario tempUser = usuarioService.build().findByPK(u);
-                if (tempUser != null) {
+                if (tempUser.getEmail() != null) {
+                    System.out.println(tempUser);
                     if (password.equals(tempUser.getContraseña())) {
                         Session.getInstance().logIn(tempUser);
                         App.currentController.changeScene(Scenes.HOME, null);

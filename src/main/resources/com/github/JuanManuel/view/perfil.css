@@ -1,0 +1,56 @@
+/*
+Background color:  #a8ffb2;
+Text color: #044004;
+Border color: #61e761;
+Font size: 20px;
+emphasis color: #61e761;
+*/
+/* perfil.css */
+.pane {
+    -fx-background-color: #a8ffb2;
+    -fx-text-fill: #044004;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+
+.split-pane {
+    -fx-background-color: #a8ffb2;
+}
+
+.split-pane > .split-pane-divider {
+    -fx-background-color: transparent; /* Make the divider transparent */
+}
+
+.vbox {
+    -fx-background-color: #a8ffb2;
+    -fx-padding: 25px;
+}
+
+.hbox {
+    -fx-spacing: 10px;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.textLabel {
+    -fx-fill: #044004;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #044004;
+    -fx-font-size: 20px;
+    -fx-border-color: #61e761;
+    -fx-border-width: 1px;
+}
+
+.button {
+    -fx-background-color: #044004;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
