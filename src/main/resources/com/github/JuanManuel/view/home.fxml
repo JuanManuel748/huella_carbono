@@ -1,14 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.github.JuanManuel.view.HomeController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="710.0" prefWidth="1000.0" style="-fx-background-color: #a8ffb2;" stylesheets="@home.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JuanManuel.view.HomeController">
+   <children>
+      <BorderPane prefHeight="750.0" prefWidth="1000.0">
+         <top>
+            <Pane prefHeight="100.0" prefWidth="1000.0" style="-fx-background-color: #61e761;" BorderPane.alignment="CENTER">
+               <children>
+                  <BorderPane prefHeight="100.0" prefWidth="1000.0">
+                     <left>
+                        <ImageView fitHeight="70.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                           <image>
+                              <Image url="@../assets/img/logo.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </left>
+                     <right>
+                        <ImageView fx:id="profile_btn" fitHeight="80.0" fitWidth="151.0" onMouseClicked="#goToProfile" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                           <image>
+                              <Image url="@../assets/img/userIcon.png" />
+                           </image>
+                        </ImageView>
+                     </right>
+                     <padding>
+                        <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+                     </padding>
+                     <center>
+                        <ComboBox fx:id="page_cho" prefHeight="65.0" prefWidth="300.0" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </children>
+            </Pane>
+         </top>
+         <center>
+            <AnchorPane fx:id="page_pane" prefHeight="650.0" prefWidth="1000.0" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </children>
 </AnchorPane>

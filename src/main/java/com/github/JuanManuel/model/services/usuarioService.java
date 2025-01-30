@@ -99,14 +99,12 @@ public class usuarioService implements service<Usuario> {
 
     @Override
     public Usuario findByPK(Usuario pk) {
-        Usuario result = new Usuario();
+        Usuario result = null;
         try {
             if (pk != null) {
                 if (pk.getId() != null) {
                     result = usuarioDAO.build().findByPK(pk);
-                }
-            } else {
-                if (pk.getEmail() != null && !pk.getEmail().isEmpty()) {
+                } else if (pk.getEmail() != null && !pk.getEmail().isEmpty()) {
                     result = usuarioDAO.build().findByEmail(pk.getEmail());
                 }
             }

@@ -38,7 +38,7 @@ public class App extends Application {
 
         stage.setScene(scene);
         stage.setTitle("Huella de Carbono");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/github/JuanManuel/assets/logo.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/github/JuanManuel/assets/img/logo.png")));
         stage.show();
     }
 }
