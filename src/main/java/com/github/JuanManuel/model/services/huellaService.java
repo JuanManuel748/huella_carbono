@@ -172,4 +172,8 @@ public class huellaService implements service<Huella>{
         }
         return result;
     }
+
+    public static huellaService build() {
+        return new huellaService();
+    }
 }

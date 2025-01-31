@@ -69,21 +69,30 @@ public class PerfilController extends Controller implements Initializable {
             if (!passField.getText().isEmpty()) {
                 u.setContraseña(HashPass.hashPassword(passField.getText()));
             }
-            usuarioService.build().update(u);
+            if (Alert.showConfirmation("¿Seguro?", "¿Estas seguro de cambiar tus datos?")) {
+                if (usuarioService.build().update(u)) {
+                    Alert.showAlert("INFORMATION", "Cambios guardados", "Se han guardado los cambios en tu cuenta");
+                } else {
+                    Alert.showAlert("ERROR", "No se pudo guardar", "No se han podido aplicar los cambios a tu cuenta");
+                }
+            }
         }
 
     }
 
     public boolean validate() {
         boolean result = false;
-        String name = nameField.getText();
-        String email = emailField.getText();
-        if (name.isEmpty() || email.isEmpty()) {
+        String name = nameField.getText().toString();
+        String email = emailField.getText().toString();
+        if (!name.isEmpty() || !email.isEmpty()) {
             if (email.matches(EMAIL_REGEX)) {
                 result = true;
+            } else {
+                Alert.showAlert("ERROR", "Email incorrecto", "Por favor, introduce un email válido");
             }
+        } else {
+            Alert.showAlert("ERROR", "Datos incorrectos", "Por favor, rellena todos los campos correctamente");
         }
-
         return result;
     }
 

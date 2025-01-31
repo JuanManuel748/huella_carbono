@@ -5,9 +5,53 @@ Border color: #61e761;
 Font size: 20px;
 emphasis color: #61e761;
 */
-/* huellas.css */
+/* perfil.css */
 .pane {
     -fx-background-color: #a8ffb2;
     -fx-text-fill: #044004;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.textLabel {
+    -fx-fill: #044004;
     -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.combo-box {
+    -fx-background-color: #044004;
+    -fx-text-fill: white; /* Ensure the text color is visible */
+    -fx-font-size: 20px; /* Increase font size */
+    -fx-alignment: CENTER; /* Center the text */
+}
+
+.combo-box .list-cell {
+    -fx-background-color: #044004;
+    -fx-text-fill: white; /* Ensure the text color is visible */
+    -fx-font-size: 20px; /* Increase font size */
+    -fx-alignment: CENTER; /* Center the text */
+}
+
+.combo-box .combo-box-popup .list-view {
+    -fx-background-color: #044004;
+    -fx-border-color: #a8ffb2;
+    -fx-text-fill: white; /* Ensure the text color is visible */
+    -fx-font-size: 20px; /* Increase font size */
+    -fx-alignment: CENTER; /* Center the text */
+}
+
+.combo-box .combo-box-popup .list-view .list-cell:selected {
+    -fx-background-color: #61e761; /* Change the background color of the selected item to blue */
+    -fx-text-fill: white; /* Ensure the text color is visible */
+}
+
+.button {
+    -fx-background-color: #044004;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }

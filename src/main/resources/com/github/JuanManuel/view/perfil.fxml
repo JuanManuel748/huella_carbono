@@ -61,7 +61,7 @@
                         </GridPane>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Button fx:id="save_btn" mnemonicParsing="false" text="GUARDAR" textFill="WHITE" />
+                              <Button fx:id="save_btn" mnemonicParsing="false" onAction="#save" text="GUARDAR" textFill="WHITE" />
                            </children>
                         </HBox>
                      </children>

@@ -78,16 +78,14 @@ public class HomeController  extends Controller implements Initializable {
 
     private void updatePage(javafx.event.Event event) {
         String page = page_cho.getValue().toString().toLowerCase();
-        if (page != null || !page.isEmpty()) {
-            if (page.equals("hábitos")) {
-                loadPage("habitos");
-                page_cho.setValue("Hábitos");
-            } else if (page.equals("huellas")) {
-                loadPage("huellas");
-                page_cho.setValue("Huellas");
-            } else {
-                Alert.showAlert("ERROR", "Página no encontrada", "La página seleccionada no existe.");
-            }
+        if (page.equals("hábitos")) {
+            loadPage("habitos");
+            page_cho.setValue("Hábitos");
+        } else if (page.equals("huellas")) {
+            loadPage("huellas");
+            page_cho.setValue("Huellas");
+        } else {
+            Alert.showAlert("ERROR", "Página no encontrada", "La página seleccionada no existe.");
         }
     }
 

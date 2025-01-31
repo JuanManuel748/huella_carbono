@@ -104,6 +104,27 @@ public class recomendacionService implements  service<Recomendacion> {
         return ls;
     }
 
+    public List<Recomendacion> findByCats(List<Categoria> cats) {
+        List<Recomendacion> ls = new ArrayList<>();
+        try {
+            if (cats != null && !cats.isEmpty()) {
+                for (Categoria cat : cats) {
+                    Categoria tempCat = categoriaService.build().findByPK(cat);
+                    if (tempCat != null) {
+                        List<Recomendacion> tempLs = recomendacionDAO.build().findByCat(tempCat);
+                        if (tempLs != null && !tempLs.isEmpty()) {
+                            ls.addAll(tempLs);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return ls;
+    }
+
     public List<Recomendacion> findByRange(Double min, Double max) {
         List<Recomendacion> ls = new ArrayList<>();
         try {
