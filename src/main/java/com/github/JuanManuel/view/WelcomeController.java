@@ -43,10 +43,12 @@ public class WelcomeController extends Controller implements Initializable {
         //App.currentController.changeScene(Scenes.LOGIN, null);
 
 
+        /* */
         // BORRAR ESTO DESPUES DE COMPROBAR QUE FUNCIONA
         App.currentController.changeScene(Scenes.HOME, null);
         Session.getInstance().logIn(usuarioService.build().findByPK(new Usuario(1)));
         System.out.println("\n\nLOGED AS "+ Session.getInstance().getCurrentUser().getNombre());
+        /* */
     }
 
 }

@@ -22,9 +22,6 @@ public class Alert {
             case "INFORMATION":
                 al.setAlertType(javafx.scene.control.Alert.AlertType.INFORMATION);
                 break;
-            case "CONFIRMATION":
-                al.setAlertType(javafx.scene.control.Alert.AlertType.CONFIRMATION);
-                break;
             case "WARNING":
                 al.setAlertType(javafx.scene.control.Alert.AlertType.WARNING);
                 break;
@@ -37,5 +34,15 @@ public class Alert {
         al.setContentText(content);
 
         al.showAndWait();
+    }
+
+    public static boolean showConfirmation(String title, String content) {
+        boolean result = false;
+        javafx.scene.control.Alert al = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.CONFIRMATION);
+        al.setTitle(title);
+        al.setHeaderText(null);
+        al.setContentText(content);
+        result = al.showAndWait().get().getButtonData().isDefaultButton();
+        return result;
     }
 }

@@ -25,8 +25,14 @@ public class usuarioService implements service<Usuario> {
                         if (usuarioDAO.build().insert(entity)) {
                             inserted = true;
                         }
+                    } else {
+                        System.out.println("Invalid data");
                     }
+                } else {
+                    System.out.println("Email already exists");
                 }
+            } else {
+                System.out.println("Email is null or empty");
             }
         } catch (Exception e) {
             e.printStackTrace();

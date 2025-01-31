@@ -9,14 +9,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #a8ffb2;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JuanManuel.view.RegisterController">
+<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #a8ffb2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JuanManuel.view.RegisterController">
     <children>
-        <Button fx:id="registerButton" layoutX="347.0" layoutY="509.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #044004;" text="Registrarse" textAlignment="CENTER" textFill="WHITE">
+        <Button fx:id="registerButton" layoutX="347.0" layoutY="509.0" mnemonicParsing="false" onAction="#register" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #044004;" text="Registrarse" textAlignment="CENTER" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Button>
-        <Button fx:id="loginButton" layoutX="598.0" layoutY="515.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="190.0" style="-fx-background-color: transparent;" text="Iniciar sesion" textFill="#044004" underline="true">
+        <Button fx:id="loginButton" layoutX="598.0" layoutY="515.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="64.0" prefWidth="190.0" style="-fx-background-color: transparent;" text="Iniciar sesion" textFill="#044004" underline="true">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font></Button>
@@ -41,12 +41,12 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" text="Telefono:">
+                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo electrónico:" wrappingWidth="175.921875" GridPane.rowIndex="1">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
                 </Text>
-                <TextField fx:id="phoneField" prefHeight="50.0" prefWidth="300.0" GridPane.columnIndex="1">
+                <TextField fx:id="nameField" prefHeight="50.0" prefWidth="300.0" GridPane.columnIndex="1">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -61,7 +61,7 @@
                         <Font name="System Bold" size="24.0" />
                     </font>
                 </Text>
-                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:" GridPane.rowIndex="1">
+                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
@@ -71,7 +71,7 @@
                         <Font size="18.0" />
                     </font>
                 </TextField>
-                <TextField fx:id="nameField" prefHeight="51.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <TextField fx:id="emailField" prefHeight="51.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <font>
                         <Font size="18.0" />
                     </font>

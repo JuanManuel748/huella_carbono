@@ -1,12 +1,27 @@
 package com.github.JuanManuel.view;
 
 import com.github.JuanManuel.App;
+import com.github.JuanManuel.model.entities.Usuario;
+import com.github.JuanManuel.model.services.usuarioService;
+import com.github.JuanManuel.utils.HashPass;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class RegisterController extends Controller implements Initializable {
+    @FXML
+    public TextField nameField;
+    @FXML
+    public TextField passwordField;
+    @FXML
+    public TextField emailField;
+    @FXML
+    public TextField repassField;
+
     /**
      * Called when the view is opened. This method is intended for any setup or initialization
      * operations when the controller is first initialized. In this case, it's empty.
@@ -38,5 +53,51 @@ public class RegisterController extends Controller implements Initializable {
 
     public void goToLogin() throws Exception {
         App.currentController.changeScene(Scenes.LOGIN, null);
+    }
+
+    public void register() {
+        if (validate()) {
+            try {
+            Usuario user = new Usuario();
+            user.setNombre(nameField.getText());
+            user.setEmail(emailField.getText());
+            user.setContraseña(HashPass.hashPassword(passwordField.getText()));
+            user.setFechaRegistro(LocalDate.now());
+            if (usuarioService.build().insert(user)) {
+                Alert.showAlert("INFORMATION", "Usuario registrado", "El usuario ha sido registrado exitosamente");
+                App.currentController.changeScene(Scenes.LOGIN, null);
+            } else {
+                Alert.showAlert("ERROR", "Error al registrar", "Ha ocurrido un error al registrar el usuario");
+            }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    private boolean validate() {
+        boolean result = false;
+
+        String name = nameField.getText();
+        String email = emailField.getText();
+        String password = passwordField.getText();
+        String repass = repassField.getText();
+
+        if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !repass.isEmpty()) {
+            if (password.equals(repass)) {
+                Usuario exists = usuarioService.build().findByPK(new Usuario(email));
+                if (exists == null) {
+                    result = true;
+                } else {
+                    Alert.showAlert("ERROR", "Usuario existente", "Ya existe un usuario con ese correo electrónico");
+                }
+            } else {
+                Alert.showAlert("ERROR", "Contraseñas no coinciden", "Las contraseñas no coinciden");
+            }
+        } else {
+            Alert.showAlert("ERROR", "Campos vacíos", "Por favor, rellene todos los campos");
+        }
+        return result;
     }
 }

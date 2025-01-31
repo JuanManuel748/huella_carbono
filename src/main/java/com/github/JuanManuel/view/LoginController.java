@@ -66,17 +66,16 @@ public class LoginController extends Controller implements Initializable {
                     System.out.println(tempUser);
                     if (password.equals(tempUser.getContraseña())) {
                         Session.getInstance().logIn(tempUser);
+                        Alert.showAlert("INFORMATION", "Bienvenido, " + tempUser.getNombre(), "Has iniciado sesión correctamente");
                         App.currentController.changeScene(Scenes.HOME, null);
                     } else {
                         Alert.showAlert("ERROR", "Contraseña equivocada", "La contraseña y el usuario no coinciden con nuestra base de datos");
-                        System.out.println("CONTRASEÑA INTRODUCIDA: " + password);
-                        System.out.println("CONTRASEÑA: " + tempUser.getContraseña());
                     }
-                } else {
-                    Alert.showAlert("ERROR", "Usuario no encontrado", "No hemos podido encontrar al usuario en nuestra base de datos");
                 }
             }
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
+            Alert.showAlert("ERROR", "Usuario no encontrado", "No hemos podido encontrar ese correo en nuestra base de datos");
+        }catch (Exception e) {
             e.printStackTrace();
         }
 
