@@ -17,9 +17,9 @@
    <children>
       <VBox layoutX="50.0" layoutY="50.0" prefHeight="550.0" prefWidth="900.0">
          <children>
-            <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <HBox alignment="BOTTOM_LEFT" spacing="20.0">
+                  <HBox alignment="BOTTOM_LEFT" spacing="50.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#goToEdit" prefHeight="50.0" prefWidth="150.0" text="Añadir" />
                         <Button layoutX="10.0" layoutY="50.0" mnemonicParsing="false" onAction="#delete" prefHeight="50.0" prefWidth="150.0" text="Eliminar" />
@@ -46,9 +46,9 @@
                                  </rowConstraints>
                                  <children>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Antes: " />
-                                    <DatePicker fx:id="before_date" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="1" />
+                                    <DatePicker fx:id="before_date" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Después: " GridPane.rowIndex="1" />
-                                    <DatePicker fx:id="after_date" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <DatePicker fx:id="after_date" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
@@ -56,7 +56,7 @@
                         <Button fx:id="filt_btn" mnemonicParsing="false" onAction="#filtHuellas" text="Filtrar" />
                      </children>
                      <HBox.margin>
-                        <Insets />
+                        <Insets left="100.0" />
                      </HBox.margin>
                   </HBox>
                </children>
@@ -66,13 +66,12 @@
             </HBox>
             <HBox prefHeight="450.0" prefWidth="900.0" spacing="20.0">
                <children>
-                  <TableView fx:id="huella_table" prefHeight="200.0">
+                  <TableView fx:id="habitos_table" prefHeight="200.0" prefWidth="600.0">
                      <columns>
-                        <TableColumn fx:id="act_col" prefWidth="245.0" text="Actividad" />
-                        <TableColumn fx:id="valor_col" prefWidth="70.0" text="Valor" />
-                        <TableColumn fx:id="unidad_col" prefWidth="70.0" text="Unidad" />
-                        <TableColumn fx:id="date_col" prefWidth="110.0" text="Fecha" />
-                        <TableColumn fx:id="impact_col" prefWidth="90.0" text="Impacto" />
+                        <TableColumn fx:id="act_col" prefWidth="250.0" text="Actividad" />
+                        <TableColumn fx:id="frec_col" prefWidth="115.0" text="Frecuencia" />
+                        <TableColumn fx:id="type_col" prefWidth="120.0" text="Tipo" />
+                        <TableColumn fx:id="date_col" prefWidth="100.0" text="Fecha" />
                      </columns>
                   </TableView>
                   <TableView fx:id="recom_table" prefHeight="200.0">
