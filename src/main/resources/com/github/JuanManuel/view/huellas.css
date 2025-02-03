@@ -1,57 +1,114 @@
 /*
-Background color:  #a8ffb2;
-Text color: #044004;
-Border color: #61e761;
+Background color:  #8FE1FF;
+Text color: #282AAD;
+Border color: #35BEF0;
 Font size: 20px;
-emphasis color: #61e761;
+emphasis color: #35F0A7;
 */
 /* perfil.css */
 .pane {
-    -fx-background-color: #a8ffb2;
-    -fx-text-fill: #044004;
+    -fx-background-color: #8FE1FF;
+    -fx-text-fill: #282AAD;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
 }
 
 .textLabel {
-    -fx-fill: #044004;
+    -fx-fill: #282AAD;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
 }
 
 .combo-box {
-    -fx-background-color: #044004;
+    -fx-background-color: #282AAD;
     -fx-text-fill: white; /* Ensure the text color is visible */
     -fx-font-size: 20px; /* Increase font size */
     -fx-alignment: CENTER; /* Center the text */
 }
 
 .combo-box .list-cell {
-    -fx-background-color: #044004;
+    -fx-background-color: #282AAD;
     -fx-text-fill: white; /* Ensure the text color is visible */
     -fx-font-size: 20px; /* Increase font size */
     -fx-alignment: CENTER; /* Center the text */
 }
 
 .combo-box .combo-box-popup .list-view {
-    -fx-background-color: #044004;
-    -fx-border-color: #a8ffb2;
+    -fx-background-color: #282AAD;
+    -fx-border-color: #35BEF0;
     -fx-text-fill: white; /* Ensure the text color is visible */
     -fx-font-size: 20px; /* Increase font size */
     -fx-alignment: CENTER; /* Center the text */
 }
 
 .combo-box .combo-box-popup .list-view .list-cell:selected {
-    -fx-background-color: #61e761; /* Change the background color of the selected item to blue */
+    -fx-background-color: #0C6BF0; /* Change the background color of the selected item to blue */
     -fx-text-fill: white; /* Ensure the text color is visible */
 }
 
 .button {
-    -fx-background-color: #044004;
+    -fx-background-color: #282AAD;
     -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-padding: 10px 20px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
+}
+
+
+
+.table-view {
+    -fx-background-color: #35BEF0; /* Background color */
+    -fx-text-fill: #282AAD; /* Text color */
+    -fx-font-size: 16px; /* Font size */
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #35BEF0; /* Header background color */
+}
+
+.table-view .column-header {
+    -fx-background-color: #282AAD; /* Header label background color */
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white; /* Header label text color */
+}
+
+.table-view .filler {
+    -fx-background-color: #0C6BF0; /* Filler background color */
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: #35BEF0; /* Row background color */
+    -fx-text-fill: #282AAD; /* Row text color */
+    -fx-wrap-text: true;
+}
+.table-view .table-row-cell:odd {
+    -fx-background-color: #9fe8ff; /* Light blue for odd rows */
+}
+
+.table-view .table-row-cell:even {
+    -fx-background-color: #b5eafb; /* Slightly darker blue for even rows */
+}
+
+.table-view .table-cell {
+    -fx-border-width: 0px; /* Remove cell borders */
+}
+.table-view .table-row-cell:selected {
+    -fx-background-color: #35F0A7; /* Selected row background color */
+    -fx-text-fill: white; /* Selected row text color */
+}
+
+.table-view .table-cell:selected {
+    -fx-background-color: #35F0A7; /* Selected cell background color */
+    -fx-text-fill: white; /* Selected cell text color */
+}
+
+.table-view .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+    -fx-min-height: 0;
 }

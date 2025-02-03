@@ -2,6 +2,7 @@ package com.github.JuanManuel.model.services;
 
 import com.github.JuanManuel.model.DAOs.categoriaDAO;
 import com.github.JuanManuel.model.entities.Categoria;
+import com.github.JuanManuel.view.Alert;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -99,11 +100,11 @@ public class categoriaService implements service<Categoria> {
             if (pk != null) {
                 if (pk.getId() != null) {
                     result = categoriaDAO.build().findByPK(pk);
-                }
-            } else {
-                nombre = pk.getNombre();
-                if (nombre != null && nombre.isEmpty()) {
-                    result = categoriaDAO.build().findByName(pk);
+                } else {
+                    nombre = pk.getNombre();
+                    if (nombre != null && nombre.isEmpty()) {
+                        result = categoriaDAO.build().findByName(pk);
+                    }
                 }
             }
         } catch (Exception e) {

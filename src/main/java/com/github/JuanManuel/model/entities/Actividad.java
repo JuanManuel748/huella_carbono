@@ -69,10 +69,6 @@ public class Actividad {
     // toString
     @Override
     public String toString() {
-        return "Actividad{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", categoria=" + idCategoria.getId() +
-                '}';
+        return id + " - " + nombre;
     }
 }

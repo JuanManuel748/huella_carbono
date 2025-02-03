@@ -24,10 +24,16 @@ public class huellaService implements service<Huella>{
         boolean result = false;
         try {
             if (validate(entity)) {
-                Huella tempHu = huellaDAO.build().findByPK(entity);
-                if (tempHu == null) {
+                if (entity.getId() == null) {
                     if (huellaDAO.build().insert(entity)) {
                         result = true;
+                    }
+                } else {
+                    Huella tempHu = huellaDAO.build().findByPK(entity);
+                    if (tempHu == null) {
+                        if (huellaDAO.build().insert(entity)) {
+                            result = true;
+                        }
                     }
                 }
             }
@@ -135,12 +141,19 @@ public class huellaService implements service<Huella>{
         return ls;
     }
 
-    public List<Huella> findByDateRange(LocalDate min, LocalDate max) {
+    public List<Huella> findByDateRange(LocalDate min, LocalDate max, Usuario u) {
         List<Huella> ls = new ArrayList<>();
         try {
             if (!min.isAfter(max)) {
                 if (min.isAfter(LocalDate.MIN) && max.isBefore(LocalDate.MAX)) {
-                    ls = huellaDAO.build().findByDateRange(min, max);
+                    if (u != null) {
+                        Usuario tempUser = usuarioService.build().findByPK(u);
+                        if (tempUser != null) {
+                            u = tempUser;
+                            ls = huellaDAO.build().findByDateRange(min, max, u);
+
+                        }
+                    }
                 }
             }
         } catch (Exception e) {
@@ -152,7 +165,8 @@ public class huellaService implements service<Huella>{
     @Override
     public boolean validate(Huella entity) {
         boolean result = false;
-
+        user = entity.getIdUsuario();
+        act = entity.getIdActividad();
         user = usuarioService.build().findByPK(user);
         act = actividadService.build().findByPK(act);
         valor = entity.getValor();
@@ -163,11 +177,9 @@ public class huellaService implements service<Huella>{
         Categoria tempCat = categoriaService.build().findByPK(act.getIdCategoria());
         tempUni = tempCat.getUnidad();
 
-        if (user != null && act != null && unidad.equals(tempUni)) {
+        if (user != null && act != null && unidad!= null && !unidad.isEmpty() && fecha != null) {
             if (valor.compareTo(BigDecimal.ZERO) > 0) {
-                if (fecha.isBefore(LocalDate.now())) {
-                    result = true;
-                }
+                result = true;
             }
         }
         return result;
