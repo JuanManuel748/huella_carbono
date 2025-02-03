@@ -96,6 +96,11 @@ public class HuellasController extends Controller implements Initializable {
     private void setupTables() {
         // Iniciar la tabla de huellas
         huellas_ls = huellaService.build().findByUser(Session.getInstance().getCurrentUser());
+        setUpHuellas(huellas_ls);
+        setUpRecoms(huellas_ls);
+    }
+
+    private void setUpHuellas(List<Huella> huellasLs) {
         huella_table.setItems(FXCollections.observableArrayList(huellas_ls));
         act_col.setCellValueFactory(cellData -> {
             Huella huella = (Huella) cellData.getValue();
@@ -111,8 +116,10 @@ public class HuellasController extends Controller implements Initializable {
             return new SimpleDoubleProperty(calculateImpact(huella)).asObject();
         });
         huella_table.setOnMouseClicked(event -> handleTableSelection(event));
-        // Buscar las categorías
-        cat_ls = extractCats(huellas_ls);
+    }
+
+    private void setUpRecoms(List<Huella> ls) {
+        cat_ls = extractCats(ls);
         recom_ls = recomendacionService.build().findByCats(cat_ls);
         // iniciar la tabla de recomendaciones
         recom_table.setItems(FXCollections.observableArrayList(recom_ls));
@@ -153,9 +160,12 @@ public class HuellasController extends Controller implements Initializable {
         try {
             if (event.getClickCount() == 1) {
                 selected = huella_table.getSelectionModel().getSelectedItem();
+                List<Huella> tempLs = new ArrayList<>();
+                tempLs.add(selected);
+                setUpRecoms(tempLs);
                 if (selected != null) {
                 } else {
-                    Alert.showAlert("ERROR", "Ningún producto seleccionado", "Haz clic en un producto para seleccionarlo.");
+                    Alert.showAlert("ERROR", "Ninguna huella seleccionada", "Haz clic en una huella para seleccionarla.");
                 }
             }
             if (event.getClickCount() == 2) {
@@ -163,7 +173,7 @@ public class HuellasController extends Controller implements Initializable {
                 if (selected != null) {
                     goToEdit();
                 } else {
-                    Alert.showAlert("ERROR", "Ningún producto seleccionado", "Haz clic en un producto para seleccionarlo.");
+                    Alert.showAlert("ERROR", "Ninguna huella seleccionada", "Haz clic en una huella para seleccionarla.");
                 }
             }
         } catch (Exception e) {

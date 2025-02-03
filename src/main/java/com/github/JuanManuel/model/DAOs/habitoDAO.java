@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,6 +99,18 @@ public class habitoDAO implements DAO<Habito> {
         Session sn = sessionFactory.openSession();
         List<Habito> ls = new ArrayList<>();
         Query<Habito> all = sn.createQuery("from Habito where frecuencia between :min and :max", Habito.class);
+        all.setParameter("min", min);
+        all.setParameter("max", max);
+        ls = all.list();
+        sn.close();
+        return ls;
+    }
+
+    public List<Habito> findByDateRange(LocalDate min, LocalDate max, Usuario usr) {
+        Session sn = sessionFactory.openSession();
+        List<Habito> ls = new ArrayList<>();
+        Query<Habito> all = sn.createQuery("from Habito where idUsuario = :usr and ultimaFecha between :min and :max", Habito.class);
+        all.setParameter("usr", usr);
         all.setParameter("min", min);
         all.setParameter("max", max);
         ls = all.list();

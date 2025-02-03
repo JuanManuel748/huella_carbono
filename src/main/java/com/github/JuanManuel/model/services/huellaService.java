@@ -87,7 +87,7 @@ public class huellaService implements service<Huella>{
     public Huella findByPK(Huella pk) {
         Huella result = new Huella();
         try {
-            if (pk != null && pk.getId() != null) {
+            if (pk.getId() != null) {
                 result = huellaDAO.build().findByPK(pk);
             }
         } catch (Exception e) {
@@ -115,8 +115,7 @@ public class huellaService implements service<Huella>{
             if (u != null) {
                 Usuario tempUser = usuarioService.build().findByPK(u);
                 if (tempUser != null) {
-                    u = tempUser;
-                    ls = huellaDAO.build().findByUser(u);
+                    ls = huellaDAO.build().findByUser(tempUser);
                 }
             }
         } catch (Exception e) {
@@ -131,8 +130,7 @@ public class huellaService implements service<Huella>{
             if (act != null) {
                 Actividad tempAct = actividadService.build().findByPK(act);
                 if (tempAct != null) {
-                    act = tempAct;
-                    ls = huellaDAO.build().findByAct(act);
+                    ls = huellaDAO.build().findByAct(tempAct);
                 }
             }
         } catch (Exception e) {
@@ -144,15 +142,11 @@ public class huellaService implements service<Huella>{
     public List<Huella> findByDateRange(LocalDate min, LocalDate max, Usuario u) {
         List<Huella> ls = new ArrayList<>();
         try {
-            if (!min.isAfter(max)) {
-                if (min.isAfter(LocalDate.MIN) && max.isBefore(LocalDate.MAX)) {
-                    if (u != null) {
-                        Usuario tempUser = usuarioService.build().findByPK(u);
-                        if (tempUser != null) {
-                            u = tempUser;
-                            ls = huellaDAO.build().findByDateRange(min, max, u);
-
-                        }
+            if (!min.isAfter(max) && min.isAfter(LocalDate.MIN) && max.isBefore(LocalDate.MAX)) {
+                if ((u != null) && (u.getId() != null || u.getEmail() != null)) {
+                    Usuario tempUser = usuarioService.build().findByPK(u);
+                    if (tempUser != null) {
+                        ls = huellaDAO.build().findByDateRange(min, max, tempUser);
                     }
                 }
             }
@@ -172,10 +166,6 @@ public class huellaService implements service<Huella>{
         valor = entity.getValor();
         unidad = entity.getUnidad();
         fecha = entity.getFecha();
-
-        String tempUni = "";
-        Categoria tempCat = categoriaService.build().findByPK(act.getIdCategoria());
-        tempUni = tempCat.getUnidad();
 
         if (user != null && act != null && unidad!= null && !unidad.isEmpty() && fecha != null) {
             if (valor.compareTo(BigDecimal.ZERO) > 0) {
