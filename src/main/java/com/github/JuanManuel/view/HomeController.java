@@ -57,6 +57,8 @@ public class HomeController  extends Controller implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        App.setController("home", this);
+
         Stage stage = (Stage) App.getPrimaryStage();
 
         if (stage != null) {
@@ -84,16 +86,18 @@ public class HomeController  extends Controller implements Initializable {
         } else if (page.equals("huellas")) {
             loadPage("huellas");
             page_cho.setValue("Huellas");
-        } else {
-            Alert.showAlert("ERROR", "Página no encontrada", "La página seleccionada no existe.");
         }
     }
 
 
-    private void loadPage(String page) {
+    protected void loadPage(String page) {
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource(page + ".fxml"));
+            if (!page.equals("huellas") && !page.equals("habitos")) {
+                page_cho.setValue("");
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

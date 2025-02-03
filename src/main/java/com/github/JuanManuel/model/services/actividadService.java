@@ -99,10 +99,10 @@ public class actividadService implements service<Actividad>{
             if (pk != null) {
                 if (pk.getId() != null) {
                     result = actividadDAO.build().findByPK(pk);
-                }
-            } else {
-                if (pk.getNombre() != null && !pk.getNombre().isEmpty()) {
-                    result = actividadDAO.build().findByName(pk);
+                } else {
+                    if (pk.getNombre() != null && !pk.getNombre().isEmpty()) {
+                        result = actividadDAO.build().findByName(pk);
+                    }
                 }
             }
         } catch (Exception e) {

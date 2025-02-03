@@ -12,8 +12,11 @@ public enum Scenes {
 
     HOME("view/home.fxml"),
     PERFIL("view/perfil.fxml"),
-    HABITOS("view/habitos.fxml"),
+
     HUELLAS("view/huellas.fxml"),
+    EDITHUELLA("view/editHuella.fxml"),
+    HABITOS("view/habitos.fxml"),
+    EDITHABITO("view/editHabito.fxml"),
 
 
 

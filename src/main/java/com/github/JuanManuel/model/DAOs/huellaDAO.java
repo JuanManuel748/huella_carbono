@@ -85,10 +85,11 @@ public class huellaDAO implements DAO<Huella>{
         return ls;
     }
 
-    public List<Huella> findByDateRange(LocalDate min, LocalDate max) {
+    public List<Huella> findByDateRange(LocalDate min, LocalDate max, Usuario usr) {
         Session sn = sessionFactory.openSession();
         List<Huella> ls = new ArrayList<>();
-        Query<Huella> all = sn.createQuery("from Huella where fecha between :min and :max", Huella.class);
+        Query<Huella> all = sn.createQuery("from Huella where idUsuario = :usr and fecha between :min and :max", Huella.class);
+        all.setParameter("usr", usr);
         all.setParameter("min", min);
         all.setParameter("max", max);
         ls = all.list();

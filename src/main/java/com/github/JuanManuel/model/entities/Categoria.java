@@ -29,6 +29,16 @@ public class Categoria {
     @OneToMany(mappedBy = "idCategoria")
     private List<com.github.JuanManuel.model.entities.Recomendacion> recomendaciones = new ArrayList<>();
 
+    public Categoria() {}
+
+    public Categoria(int id) {
+        this.id = id;
+    }
+
+    public Categoria(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Integer getId() {
         return id;
     }
