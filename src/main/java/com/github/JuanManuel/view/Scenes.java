@@ -17,6 +17,7 @@ public enum Scenes {
     EDITHUELLA("view/editHuella.fxml"),
     HABITOS("view/habitos.fxml"),
     EDITHABITO("view/editHabito.fxml"),
+    SOCIAL("view/social.fxml"),
 
 
 

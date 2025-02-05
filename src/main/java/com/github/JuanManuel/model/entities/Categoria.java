@@ -97,12 +97,4 @@ public class Categoria {
                 '}';
     }
 
-    public String print() {
-        return "Categoria{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", factorEmision=" + factorEmision +
-                ", unidad='" + unidad + '\'' +
-                '}';
-    }
 }

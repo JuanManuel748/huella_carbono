@@ -97,6 +97,23 @@ public class huellaDAO implements DAO<Huella>{
         return ls;
     }
 
+    public List<Object[]> countByCategoria(Usuario u) {
+        Session sn = sessionFactory.openSession();
+        List<Object[]> results = new ArrayList<>();
+        String hql = "SELECT c.nombre, COUNT(h) " +
+                "FROM Huella h " +
+                "JOIN h.idActividad a " +
+                "JOIN a.idCategoria c " +
+                "WHERE h.idUsuario = :userId " +
+                "GROUP BY c.nombre";
+        Query<Object[]> query = sn.createQuery(hql, Object[].class);
+        query.setParameter("userId", u);
+        results = query.list();
+        sn.close();
+        return results;
+    }
+
+
     @Override
     public void close() throws IOException {
 

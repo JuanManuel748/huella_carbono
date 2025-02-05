@@ -5,11 +5,11 @@ import com.github.JuanManuel.model.entities.*;
 import com.github.JuanManuel.model.services.actividadService;
 import com.github.JuanManuel.model.services.categoriaService;
 import com.github.JuanManuel.model.services.huellaService;
-import com.github.JuanManuel.model.services.recomendacionService;
+import com.github.JuanManuel.utils.CSVmanager;
+import com.github.JuanManuel.utils.PDFmanager;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,7 +20,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -88,6 +90,7 @@ public class HuellasController extends Controller implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        selected = new Huella();
         setupTables();
         before_date.setValue(LocalDate.now().minusYears(1));
         after_date.setValue(LocalDate.now());
@@ -97,7 +100,7 @@ public class HuellasController extends Controller implements Initializable {
         // Iniciar la tabla de huellas
         huellas_ls = huellaService.build().findByUser(Session.getInstance().getCurrentUser());
         setUpHuellas(huellas_ls);
-        setUpRecoms(huellas_ls);
+        reloadCalc();
     }
 
     private void setUpHuellas(List<Huella> huellasLs) {
@@ -118,28 +121,7 @@ public class HuellasController extends Controller implements Initializable {
         huella_table.setOnMouseClicked(event -> handleTableSelection(event));
     }
 
-    private void setUpRecoms(List<Huella> ls) {
-        cat_ls = extractCats(ls);
-        recom_ls = recomendacionService.build().findByCats(cat_ls);
-        // iniciar la tabla de recomendaciones
-        recom_table.setItems(FXCollections.observableArrayList(recom_ls));
-        desc_col.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        rec_imp_col.setCellValueFactory(new PropertyValueFactory<>("impactoEstimado"));
-    }
 
-    private List<Categoria> extractCats(List<Huella> huellasLs) {
-        List<Categoria> result = new ArrayList<>();
-        for (Huella huella : huellasLs) {
-            Actividad act = huella.getIdActividad();
-            act = actividadService.build().findByPK(act);
-            Categoria cat = act.getIdCategoria();
-            cat = categoriaService.build().findByPK(cat);
-            if (!result.contains(cat)) {
-                result.add(cat);
-            }
-        }
-        return result;
-    }
 
     private double calculateImpact(Huella huella) {
         Double result = 0.0;
@@ -162,7 +144,6 @@ public class HuellasController extends Controller implements Initializable {
                 selected = huella_table.getSelectionModel().getSelectedItem();
                 List<Huella> tempLs = new ArrayList<>();
                 tempLs.add(selected);
-                setUpRecoms(tempLs);
                 if (selected != null) {
                 } else {
                     Alert.showAlert("ERROR", "Ninguna huella seleccionada", "Haz clic en una huella para seleccionarla.");
@@ -182,18 +163,64 @@ public class HuellasController extends Controller implements Initializable {
     }
 
 
-    public void goToEdit() throws Exception {
-        HomeController homeController = (HomeController) App.getController("home");
-        homeController.loadPage("editHuella");
+    public void add() {
+        selected = new Huella();
+        goToEdit();
+    }
+
+    public void goToEdit() {
+        try {
+            HomeController homeController = (HomeController) App.getController("home");
+            homeController.loadPage("editHuella");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
     public void filtHuellas(ActionEvent actionEvent) {
+        String[] options = {"Último día", "Última semana", "Último mes", "Último año", "Todo", "Fecha personalizada"};
+        String resultAlert = Alert.showChoice("¿Cómo quieres filtrar las huellas?", options).toLowerCase();        LocalDate before = LocalDate.now().minusYears(2);
+        LocalDate after = LocalDate.now();
+        switch (resultAlert) {
+            case "fecha personalizada":
+                before = before_date.getValue();
+                after = after_date.getValue();
+                break;
+            case "último día":
+                before = LocalDate.now().minusDays(1);
+                after = LocalDate.now();
+                break;
+            case "última semana":
+                before = LocalDate.now().minusWeeks(1);
+                after = LocalDate.now();
+                break;
+            case "último mes":
+                before = LocalDate.now().minusMonths(1);
+                after = LocalDate.now();
+                break;
+            case "último año":
+                before = LocalDate.now().minusYears(1);
+                after = LocalDate.now();
+                break;
+            case "todo":
+                before = LocalDate.MIN;
+                after = LocalDate.now();
+                break;
+            default:
+                break;
+        }
+        before_date.setValue(before);
+        after_date.setValue(after);
+        filt();
+    }
+
+    private void filt() {
         LocalDate before = before_date.getValue();
         LocalDate after = after_date.getValue();
         Usuario user = Session.getInstance().getCurrentUser();
         huellas_ls = huellaService.build().findByDateRange(before, after, user);
-        huella_table.setItems(FXCollections.observableArrayList(huellas_ls));
+        reloadCalc();
     }
 
     public void delete(ActionEvent actionEvent) {
@@ -202,7 +229,7 @@ public class HuellasController extends Controller implements Initializable {
             if (Alert.showConfirmation("¿Estás seguro de que quieres eliminar esta huella?", "Esta acción no se puede deshacer.")) {
                 if (huellaService.build().delete(selected)) {
                     huellas_ls.remove(selected);
-                    huella_table.setItems(FXCollections.observableArrayList(huellas_ls));
+                    reloadCalc();
                 }
             }
         }  else {
@@ -210,4 +237,41 @@ public class HuellasController extends Controller implements Initializable {
         }
 
     }
+
+    private void reloadCalc() {
+        setUpHuellas(huellas_ls);
+        Double impact = 0.0;
+        for (Huella h: huellas_ls) {
+            impact += calculateImpact(h);
+        }
+        impact_txt.setText(impact.toString());
+    }
+
+    public void saveStats() {
+        try {
+            List<Huella> huellas = huellaService.build().findAll();
+            String[] options = {"Sí", "No"};
+            String confirmation = Alert.showChoice("¿Usar huellas de la tabla para calcular estadísticas?", options);
+            //confirmation = Alert.showConfirmation("Esto puede tardar unos segundos.", "¿Usar huellas de la tabla para calcular estadísticas?");
+            if (confirmation.equalsIgnoreCase("Sí")) {
+                huellas = huellas_ls;
+            } else if (confirmation.equalsIgnoreCase("No")) {
+                huellas = huellaService.build().findAll();
+            } else {
+                return;
+            }
+
+            String selection = Alert.showChoice("¿Qué tipo de archivo quieres guardar?", new String[]{"PDF", "CSV"});
+            if (selection.equalsIgnoreCase("PDF")) {
+                PDFmanager.build().generatePDF(huellas);
+            } else if (selection.equalsIgnoreCase("CSV")) {
+                CSVmanager.build().generateCSV(huellas);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }
