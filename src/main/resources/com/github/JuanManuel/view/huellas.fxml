@@ -17,11 +17,11 @@
    <children>
       <VBox layoutX="50.0" layoutY="50.0" prefHeight="550.0" prefWidth="900.0">
          <children>
-            <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <HBox alignment="BOTTOM_LEFT" spacing="50.0">
+                  <HBox alignment="BOTTOM_LEFT" spacing="25.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#goToEdit" prefHeight="50.0" prefWidth="150.0" text="Añadir" />
+                        <Button mnemonicParsing="false" onAction="#add" prefHeight="50.0" prefWidth="150.0" text="Añadir" />
                         <Button layoutX="10.0" layoutY="50.0" mnemonicParsing="false" onAction="#delete" prefHeight="50.0" prefWidth="150.0" text="Eliminar" />
                      </children>
                      <opaqueInsets>
@@ -31,7 +31,7 @@
                         <Insets />
                      </HBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" spacing="20.0">
+                  <HBox alignment="CENTER" minHeight="-Infinity" prefHeight="100.0" spacing="20.0">
                      <children>
                         <VBox prefHeight="100.0" spacing="20.0">
                            <children>
@@ -68,7 +68,7 @@
                         <Button fx:id="filt_btn" mnemonicParsing="false" onAction="#filtHuellas" text="Filtrar" />
                      </children>
                      <HBox.margin>
-                        <Insets left="100.0" />
+                        <Insets left="120.0" />
                      </HBox.margin>
                   </HBox>
                </children>
@@ -78,23 +78,34 @@
             </HBox>
             <HBox prefHeight="450.0" prefWidth="900.0" spacing="20.0">
                <children>
-                  <TableView fx:id="huella_table" prefHeight="200.0">
+                  <TableView fx:id="huella_table" prefHeight="200.0" prefWidth="900.0">
                      <columns>
-                        <TableColumn fx:id="act_col" prefWidth="245.0" text="Actividad" />
-                        <TableColumn fx:id="valor_col" prefWidth="70.0" text="Valor" />
-                        <TableColumn fx:id="unidad_col" prefWidth="70.0" text="Unidad" />
-                        <TableColumn fx:id="date_col" prefWidth="110.0" text="Fecha" />
-                        <TableColumn fx:id="impact_col" prefWidth="90.0" text="Impacto" />
+                        <TableColumn fx:id="act_col" prefWidth="350.0" text="Actividad" />
+                        <TableColumn fx:id="valor_col" prefWidth="150.0" text="Valor" />
+                        <TableColumn fx:id="unidad_col" prefWidth="100.0" text="Unidad" />
+                        <TableColumn fx:id="date_col" prefWidth="150.0" text="Fecha" />
+                        <TableColumn fx:id="impact_col" prefWidth="145.0" text="Impacto" />
                      </columns>
                   </TableView>
-                  <TableView fx:id="recom_table" prefHeight="200.0">
-                     <columns>
-                         <TableColumn fx:id="desc_col" prefWidth="200.0" text="Descripción">
-
-                         </TableColumn>
-                         <TableColumn fx:id="rec_imp_col" prefWidth="100.0" text="Impacto" />
-                     </columns>
-                  </TableView>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" minHeight="-Infinity" prefHeight="70.0" prefWidth="200.0">
+               <children>
+                  <HBox alignment="BOTTOM_LEFT" prefHeight="100.0">
+                     <children>
+                        <Button fx:id="save_btn" mnemonicParsing="false" onAction="#saveStats" prefHeight="50.0" text="Guardar estadísticas" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="600.0">
+                     <children>
+                        <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Impacto:" />
+                              <Text fx:id="impact_txt" layoutX="10.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="000.000" textAlignment="RIGHT" wrappingWidth="100.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
                </children>
             </HBox>
          </children>

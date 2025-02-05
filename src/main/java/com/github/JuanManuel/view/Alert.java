@@ -1,5 +1,10 @@
 package com.github.JuanManuel.view;
 
+import javafx.scene.control.ButtonType;
+
+import java.util.List;
+import java.util.Optional;
+
 /**
  * The alert class contains methods for displaying alert dialogs.
  */
@@ -44,5 +49,21 @@ public class Alert {
         al.setContentText(content);
         result = al.showAndWait().get().getButtonData().isDefaultButton();
         return result;
+    }
+
+
+    public static String showChoice(String title, String[] options) {
+        String resultST = "cancel";
+        javafx.scene.control.Alert  alert = new javafx.scene.control.Alert (javafx.scene.control.Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Elige una opción");
+        alert.setHeaderText(title);
+        alert.getButtonTypes().clear();
+        for (String option : options) {
+            alert.getButtonTypes().add(new ButtonType(option));
+        }
+        alert.getButtonTypes().add(ButtonType.CANCEL);
+        Optional<ButtonType> result = alert.showAndWait();
+        resultST = result.map(ButtonType::getText).orElse("cancel");
+        return resultST;
     }
 }

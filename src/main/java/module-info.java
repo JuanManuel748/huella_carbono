@@ -6,6 +6,11 @@ module com.github.JuanManuel {
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
     requires java.management;
+    requires kernel;
+    requires layout;
+    requires java.desktop;
+    requires io;
+    requires org.jfree.jfreechart;
 
     opens com.github.JuanManuel to javafx.fxml;
     opens com.github.JuanManuel.model.connection to java.xml.bind;

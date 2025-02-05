@@ -175,7 +175,22 @@ public class huellaService implements service<Huella>{
         return result;
     }
 
-    public static huellaService build() {
+    public List<Object[]> countByCategoria(Usuario u) {
+        List<Object[]> ls = new ArrayList<>();
+        try {
+            if (u.getId() != null || u.getEmail() != null) {
+                Usuario tempUser = usuarioService.build().findByPK(u);
+                if (tempUser != null) {
+                    ls = huellaDAO.build().countByCategoria(tempUser);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return ls;
+    }
+
+        public static huellaService build() {
         return new huellaService();
     }
 }
