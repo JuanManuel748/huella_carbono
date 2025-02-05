@@ -147,14 +147,6 @@ public class HabitosController extends Controller implements Initializable {
                     Alert.showAlert("ERROR", "Ningún producto seleccionado", "Haz clic en un producto para seleccionarlo.");
                 }
             }
-            if (event.getClickCount() == 2) {
-                selected = habitos_table.getSelectionModel().getSelectedItem();
-                if (selected != null) {
-                    goToEdit();
-                } else {
-                    Alert.showAlert("ERROR", "Ningún producto seleccionado", "Haz clic en un producto para seleccionarlo.");
-                }
-            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

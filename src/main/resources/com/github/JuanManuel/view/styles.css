@@ -1,0 +1,83 @@
+
+/* GENERAL STYLES */
+.pane, .split-pane, .textLabel, .titleLabel, .text-field, .combo-box, .button, .table-view {
+    -fx-background-color: #8FE1FF;
+    -fx-text-fill: #282AAD;
+    -fx-fill: #282AAD;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-alignment: CENTER;
+}
+.split-pane > .split-pane-divider {
+    -fx-background-color: transparent;
+}
+.titleLabel {
+    -fx-font-size: 64px;
+}
+
+.combo-box, .button {
+    -fx-background-color: #282AAD;
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+}
+
+/* COMBO BOX STYLES */
+.combo-box .arrow, .combo-box .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 -7;
+    -fx-shape: "";
+}
+
+.combo-box .list-cell, .combo-box .list-view {
+    -fx-background-color: #282AAD;
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+}
+.combo-box .combo-box-popup .list-view .list-cell:selected {
+    -fx-background-color: #35F0A7;
+}
+
+/* INPUT STYLES */
+.text-field {
+    -fx-background-color: #b8ecff;
+    -fx-border-color: #35F0A7;
+    -fx-border-width: 1px;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+}
+
+.DatePicker, .spinner{
+    -fx-background-color: transparent;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-border-color: #35F0A7;
+    -fx-border-width: 1px;
+}
+.spinner .increment-arrow-button, .spinner .decrement-arrow-button{
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 -15;
+    -fx-shape: "";
+}
+.spinner .increment-arrow-button .increment-arrow, .spinner .decrement-arrow-button .decrement-arrow {
+    -fx-background-color: transparent;
+}
+
+.DatePicker .arrow-button{
+    -fx-background-color: #5bfbbd;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+}
+
+
+.DatePicker .arrow-button .arrow {
+    -fx-background-color: #282AAD;
+}
+
+
+/* TABLE STYLES */

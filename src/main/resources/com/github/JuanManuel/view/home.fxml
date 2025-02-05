@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="710.0" prefWidth="1000.0" style="-fx-background-color: #8FE1FF;" stylesheets="@home.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JuanManuel.view.HomeController">
+<AnchorPane prefHeight="710.0" prefWidth="1000.0" style="-fx-background-color: #8FE1FF;" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JuanManuel.view.HomeController">
    <children>
       <BorderPane prefHeight="750.0" prefWidth="1000.0">
          <top>

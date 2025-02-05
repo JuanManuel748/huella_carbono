@@ -18,19 +18,6 @@ public class AppController extends Controller implements Initializable {
     private BorderPane borderPane;
     private Controller centerController;
 
-
-    public static final String BACKGROUND_COLOR = "#a8ffb2";
-    public static final String TEXT_COLOR = "#044004";
-    public static final String BUTTON_COLOR = "#044004";
-    public static final String BUTTON_TEXT_COLOR = "WHITE";
-    public static final String TABLE_COLOR = "WHITE";
-    /*
-    *  #044004
-    * #a8ffb2
-    * #61e761
-    */
-
-
     /**
      * This method is called when the AppController is opened.
      * By default, it sets the initial scene to the WELCOME screen.

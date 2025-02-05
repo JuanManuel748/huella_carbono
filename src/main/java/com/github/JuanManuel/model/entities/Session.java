@@ -19,7 +19,7 @@ public class Session {
         currentUser = usr;
     }
 
-    public void logOut(Usuario usr) {
+    public void logOut() {
         currentUser = null;
     }
 }

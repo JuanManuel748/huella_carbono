@@ -4,6 +4,7 @@ import com.github.JuanManuel.model.entities.Actividad;
 import com.github.JuanManuel.model.entities.Habito;
 import com.github.JuanManuel.model.entities.Usuario;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.io.IOException;
@@ -16,12 +17,26 @@ public class habitoDAO implements DAO<Habito> {
 
     @Override
     public boolean insert(Habito entity) {
+        boolean result = false;
         Session sn = sessionFactory.openSession();
-        sn.beginTransaction();
-        sn.persist(entity);
-        sn.getTransaction().commit();
-        sn.close();
-        return true;
+        Transaction tx = sn.beginTransaction();
+        try {
+            if (entity.getIdActividad() != null) {
+                entity.setIdActividad(sn.merge(entity.getIdActividad()));
+            }
+            if (entity.getIdUsuario() != null) {
+                entity.setIdUsuario(sn.merge(entity.getIdUsuario()));
+            }
+            sn.persist(entity);
+            tx.commit();
+            result = true;
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e;
+        } finally {
+            sn.close();
+            return result;
+        }
     }
 
     @Override
