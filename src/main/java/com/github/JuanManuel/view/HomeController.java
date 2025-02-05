@@ -35,7 +35,19 @@ public class HomeController  extends Controller implements Initializable {
      * @param input the input object passed when opening the view.
      */
     @Override
-    public void onOpen(Object input) throws Exception {}
+    public void onOpen(Object input) throws Exception {
+        App.setController("home", this);
+
+        Stage stage = (Stage) App.getPrimaryStage();
+
+        if (stage != null) {
+            stage.setMinWidth(1015);
+            stage.setMinHeight(800);
+            stage.centerOnScreen();
+        } else {
+            Alert.showAlert("ERROR", "", "No se ha podido cargar la ventana principal.");
+        }
+    }
 
     /**
      * Called when the view is closed. This method handles any cleanup or state persistence
@@ -57,18 +69,11 @@ public class HomeController  extends Controller implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        App.setController("home", this);
-
-        Stage stage = (Stage) App.getPrimaryStage();
-
-        if (stage != null) {
-            stage.setMinWidth(1015);
-            stage.setMinHeight(800);
-            stage.centerOnScreen();
-        } else {
-            Alert.showAlert("ERROR", "", "No se ha podido cargar la ventana principal.");
+        try {
+            onOpen(null);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
         page_cho.setItems(observableArrayList("Huellas", "Hábitos"));
         page_cho.setOnAction(this::updatePage);
         page_cho.setValue("Huellas");

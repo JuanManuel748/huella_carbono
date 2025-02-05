@@ -29,6 +29,14 @@ public class Habito {
     @Column(name = "ultima_fecha", nullable = false)
     private LocalDate ultimaFecha;
 
+    public Habito() {}
+
+    public Habito(Usuario u, Actividad act) {
+        this.idUsuario = u;
+        this.idActividad = act;
+        this.id = new HabitoId(u.getId(), act.getId());
+    }
+
     public HabitoId getId() {
         return id;
     }

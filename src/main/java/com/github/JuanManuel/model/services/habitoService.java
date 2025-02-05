@@ -24,10 +24,12 @@ public class habitoService implements service<Habito> {
         try {
             if (validate(entity)) {
                 if (entity.getId() == null) {
+                    entity = createId(entity);
                     if (habitoDAO.build().insert(entity)) {
                         result = true;
                     }
                 } else {
+                    entity = createId(entity);
                     Habito tempHab = habitoDAO.build().findByPK(entity);
                     if (tempHab == null) {
                         if (habitoDAO.build().insert(entity)) {
@@ -40,6 +42,17 @@ public class habitoService implements service<Habito> {
             throw new RuntimeException(e);
         }
         return result;
+    }
+
+    private Habito createId(Habito entity) {
+        Usuario tempUser = entity.getIdUsuario();
+        tempUser = usuarioService.build().findByPK(tempUser);
+        Actividad tempAct = entity.getIdActividad();
+        tempAct = actividadService.build().findByPK(tempAct);
+        entity.setId(new HabitoId(tempUser.getId(), tempAct.getId()));
+        entity.setIdUsuario(tempUser);
+        entity.setIdActividad(tempAct);
+        return entity;
     }
 
     @Override

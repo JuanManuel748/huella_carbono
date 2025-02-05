@@ -9,22 +9,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #a8ffb2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JuanManuel.view.RegisterController">
+<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JuanManuel.view.RegisterController">
     <children>
-        <Button fx:id="registerButton" layoutX="347.0" layoutY="509.0" mnemonicParsing="false" onAction="#register" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #044004;" text="Registrarse" textAlignment="CENTER" textFill="WHITE">
+        <Button fx:id="registerButton" layoutX="317.0" layoutY="509.0" mnemonicParsing="false" onAction="#register" prefHeight="51.0" prefWidth="167.0" text="Registrarse" textAlignment="CENTER" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Button>
-        <Button fx:id="loginButton" layoutX="598.0" layoutY="515.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="64.0" prefWidth="190.0" style="-fx-background-color: transparent;" text="Iniciar sesion" textFill="#044004" underline="true">
-            <font>
-                <Font name="System Bold" size="18.0" />
-            </font></Button>
-        <Text layoutX="598.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¿Ya tienes una cuenta?">
+        <Text layoutX="570.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="¿Ya tienes una cuenta?">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font></Text>
-        <Text fill="#044004" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrarse" textAlignment="CENTER" wrappingWidth="800.0">
+        <Text fill="#044004" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titleLabel" text="Registrarse" textAlignment="CENTER" wrappingWidth="800.0">
             <font>
                 <Font name="System Bold" size="72.0" />
             </font>
@@ -41,7 +37,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo electrónico:" wrappingWidth="175.921875" GridPane.rowIndex="1">
+                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Correo electrónico:" wrappingWidth="175.921875" GridPane.rowIndex="1">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
@@ -51,17 +47,17 @@
                         <Font size="18.0" />
                     </font>
                 </TextField>
-                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" text="Contraseña:" GridPane.rowIndex="2">
+                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Contraseña:" GridPane.rowIndex="2">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
                 </Text>
-                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" text="Repetir contraseña:" wrappingWidth="133.453125" GridPane.rowIndex="3">
+                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Repetir contraseña:" wrappingWidth="133.453125" GridPane.rowIndex="3">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
                 </Text>
-                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:">
+                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Nombre:">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
@@ -83,5 +79,9 @@
                 </TextField>
             </children>
         </GridPane>
+        <Button fx:id="loginButton" layoutX="580.0" layoutY="509.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="64.0" prefWidth="190.0" style="-fx-background-color: transparent;" text="Iniciar sesion" textFill="#044004" underline="true">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font></Button>
     </children>
 </AnchorPane>

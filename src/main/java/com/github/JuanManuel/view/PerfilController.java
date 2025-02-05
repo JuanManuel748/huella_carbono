@@ -1,5 +1,6 @@
 package com.github.JuanManuel.view;
 
+import com.github.JuanManuel.App;
 import com.github.JuanManuel.model.entities.Session;
 import com.github.JuanManuel.model.entities.Usuario;
 import com.github.JuanManuel.model.services.usuarioService;
@@ -94,6 +95,13 @@ public class PerfilController extends Controller implements Initializable {
             Alert.showAlert("ERROR", "Datos incorrectos", "Por favor, rellena todos los campos correctamente");
         }
         return result;
+    }
+
+    public void logout() throws Exception {
+        Session.getInstance().logOut();
+        App.currentController.changeScene(Scenes.WELCOME, null);
+
+
     }
 
 

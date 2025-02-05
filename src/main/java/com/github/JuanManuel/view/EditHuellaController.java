@@ -22,6 +22,7 @@ import javafx.scene.text.Text;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -73,6 +74,7 @@ public class EditHuellaController extends Controller implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        date_input.setValue(LocalDate.now());
         act_ls = actividadService.build().findAll();
         currentAct = act_ls.get(0);
         act_cho.setItems(observableArrayList(act_ls));
@@ -91,6 +93,7 @@ public class EditHuellaController extends Controller implements Initializable {
         currentAct = actividadService.build().findByPK(currentAct);
         act_cho.getSelectionModel().select(currentAct);
         setAct();
+
         valor_input.getValueFactory().setValue(currentHuella.getValor().doubleValue());
         date_input.setValue(currentHuella.getFecha());
     }

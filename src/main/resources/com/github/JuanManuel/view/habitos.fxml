@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" styleClass="pane" stylesheets="@habitos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JuanManuel.view.HabitosController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" styleClass="pane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JuanManuel.view.HabitosController">
    <children>
       <VBox layoutX="50.0" layoutY="50.0" prefHeight="550.0" prefWidth="900.0">
          <children>
@@ -45,10 +45,22 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Antes: " />
-                                    <DatePicker fx:id="before_date" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Después: " GridPane.rowIndex="1" />
-                                    <DatePicker fx:id="after_date" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Antes: ">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" />
+                                       </GridPane.margin></Text>
+                                    <DatePicker fx:id="before_date" prefHeight="30.0" prefWidth="200.0" styleClass="DatePicker" GridPane.columnIndex="1">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" />
+                                       </GridPane.margin></DatePicker>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Después: " GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets top="10.0" />
+                                       </GridPane.margin></Text>
+                                    <DatePicker fx:id="after_date" prefHeight="30.0" prefWidth="200.0" styleClass="DatePicker" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets top="10.0" />
+                                       </GridPane.margin></DatePicker>
                                  </children>
                               </GridPane>
                            </children>
