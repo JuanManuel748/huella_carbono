@@ -7,17 +7,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #a8ffb2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JuanManuel.view.LoginController">
+<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="800.0" styleClass="pane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JuanManuel.view.LoginController">
     <children>
-        <Button fx:id="goToRegisterButton" layoutX="614.0" layoutY="530.0" mnemonicParsing="false" onAction="#goToRegister" style="-fx-background-color: transparent;" text="Registrarse" textFill="#044004" underline="true">
-            <font>
-                <Font name="System Bold" size="18.0" />
-            </font></Button>
-        <Text layoutX="576.0" layoutY="524.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¿No tienes una cuenta?">
+        <Text layoutX="566.0" layoutY="485.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="¿No tienes una cuenta?">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font></Text>
-        <Text fill="#044004" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iniciar Sesión" textAlignment="CENTER" wrappingWidth="800.0">
+        <Text fill="#044004" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titleLabel" text="Iniciar Sesión" textAlignment="CENTER" wrappingWidth="800.0">
             <font>
                 <Font name="System Bold" size="72.0" />
             </font>
@@ -27,12 +23,12 @@
                 <Font size="24.0" />
             </font>
         </TextField>
-        <Text fx:id="emailText" fill="#044004" layoutX="159.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo electrónico:" textAlignment="CENTER" wrappingWidth="220.800048828125">
+        <Text fx:id="emailText" fill="#282aad" layoutX="159.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo electrónico:" textAlignment="CENTER" wrappingWidth="220.800048828125">
             <font>
                 <Font name="System Bold" size="24.0" />
             </font>
         </Text>
-        <Text fx:id="passwordText" fill="#044004" layoutX="159.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contraseña:" textAlignment="CENTER">
+        <Text fx:id="passwordText" fill="#282aad" layoutX="159.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contraseña:" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="24.0" />
             </font>
@@ -42,10 +38,14 @@
             <Font size="24.0" />
          </font>
       </PasswordField>
-        <Button fx:id="loginButton" layoutX="359.0" layoutY="466.0" mnemonicParsing="false" onAction="#logIn" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #044004;" text="Entrar" textAlignment="CENTER" textFill="WHITE">
+        <Button fx:id="loginButton" layoutX="339.0" layoutY="465.0" mnemonicParsing="false" onAction="#logIn" prefHeight="51.0" prefWidth="122.0" text="Entrar" textAlignment="CENTER" textFill="WHITE">
             <font>
                 <Font size="24.0" />
             </font>
         </Button>
+        <Button fx:id="goToRegisterButton" layoutX="595.0" layoutY="477.0" mnemonicParsing="false" onAction="#goToRegister" style="-fx-background-color: transparent;" text="Registrarse" textFill="#044004" underline="true">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font></Button>
     </children>
 </AnchorPane>

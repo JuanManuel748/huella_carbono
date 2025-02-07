@@ -64,7 +64,7 @@ public class categoriaDAO implements DAO<Categoria> {
 
     public Categoria findByName(Categoria entity) {
         Session sn = sessionFactory.openSession();
-        Categoria result = new Categoria();
+        Categoria result = null;
         sn.beginTransaction();
         Query<Categoria> query = sn.createQuery("from Categoria where nombre = :nombre", Categoria.class);
         query.setParameter("nombre", entity.getNombre());

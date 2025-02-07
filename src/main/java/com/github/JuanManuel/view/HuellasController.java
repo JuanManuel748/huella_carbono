@@ -204,7 +204,7 @@ public class HuellasController extends Controller implements Initializable {
                 after = LocalDate.now();
                 break;
             case "todo":
-                before = LocalDate.MIN;
+                before = LocalDate.now().minusYears(100);
                 after = LocalDate.now();
                 break;
             default:

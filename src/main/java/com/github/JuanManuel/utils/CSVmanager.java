@@ -3,6 +3,7 @@ package com.github.JuanManuel.utils;
 import com.github.JuanManuel.model.entities.*;
 import com.github.JuanManuel.model.services.actividadService;
 import com.github.JuanManuel.model.services.categoriaService;
+import com.github.JuanManuel.model.services.huellaService;
 import com.github.JuanManuel.model.services.recomendacionService;
 import com.itextpdf.layout.element.Paragraph;
 import javafx.stage.FileChooser;
@@ -40,7 +41,6 @@ public class CSVmanager {
             writer.append("Fecha de Registro: ").append(currentUser.getFechaRegistro().toString()).append("\n");
 
             writer.append("\nHuellas de Carbono\n");
-            writer.append("Actividad,Valor,Unidad,Fecha,Impacto\n");
 
             for (Huella huella : huellas) {
                 Actividad tempAct = huella.getIdActividad();
@@ -56,8 +56,26 @@ public class CSVmanager {
             writer.append("\nRecomendaciones\n");
             writer.append("Descripción,Impacto\n");
             for (Recomendacion recomendacion : recomendaciones) {
-                writer.append(recomendacion.getDescripcion()).append(",");
+                writer.append(recomendacion.getDescripcion()).append(" -> ");
                 writer.append(recomendacion.getImpactoEstimado().toString()).append("\n");
+            }
+
+            writer.append("\nTotal de impacto: ").append(String.valueOf(huellas.stream().mapToDouble(this::calculateImpact).sum()) + " (kg CO₂/unidad)");
+            writer.append("\n\nCategorias con mayor impacto\n");
+            List<Object[]> categorias = new ArrayList<>();
+            categorias = huellaService.build().countByCategorias(currentUser);
+            for (Object[] obj : categorias) {
+                writer.append(obj[0].toString()).append(" -> ");
+                double percent = Double.parseDouble(obj[1].toString())  / huellas.size() * 100;
+                writer.append(String.valueOf(percent)).append("%\n");
+            }
+
+            writer.append("\nHistorial de impacto por mes\n");
+            List<Object[]> historial = new ArrayList<>();
+            historial = huellaService.build().statsByMonth(currentUser);
+            for (Object[] obj : historial) {
+                writer.append(obj[0].toString()).append(" -> ");
+                writer.append(obj[1].toString()).append(" (kg CO₂/unidad) \n");
             }
 
             writer.flush();

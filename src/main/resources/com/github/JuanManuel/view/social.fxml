@@ -1,5 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" styleClass="pane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JuanManuel.view.SocialController" />
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" styleClass="pane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.JuanManuel.view.SocialController">
+   <children>
+      <VBox alignment="CENTER" layoutX="50.0" layoutY="25.0" prefHeight="600.0" prefWidth="900.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="700.0" spacing="50.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="50.0">
+                     <children>
+                        <ComboBox fx:id="filter_cho" prefWidth="270.0" />
+                        <ComboBox fx:id="grachic_cho" prefWidth="270.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" spacing="10.0">
+                     <children>
+                        <TextField fx:id="newUser_input" />
+                        <ImageView fx:id="search_btn" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#search" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/img/search.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets left="50.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="450.0" prefWidth="900.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="450.0">
+                     <children>
+                        <VBox prefHeight="100.0" prefWidth="450.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Impacto estimado:" />
+                              <Text fx:id="currentUser_impact" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="0.00" />
+                           </children>
+                           <VBox.margin>
+                              <Insets left="55.0" right="15.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox>
+                           <children>
+                              <LineChart fx:id="currentUser_line">
+                                <xAxis>
+                                  <CategoryAxis side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis side="LEFT" />
+                                </yAxis>
+                              </LineChart>
+                              <BarChart fx:id="currentUser_barChart">
+                                <xAxis>
+                                  <CategoryAxis side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis side="LEFT" />
+                                </yAxis>
+                              </BarChart>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="450.0">
+                     <children>
+                        <VBox prefHeight="100.0" prefWidth="450.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Impacto estimado:" />
+                              <Text fx:id="newUser_impact" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="0.00" />
+                           </children>
+                           <VBox.margin>
+                              <Insets left="60.0" right="15.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox>
+                           <children>
+                              <LineChart fx:id="newUser_line">
+                                 <xAxis>
+                                    <CategoryAxis side="BOTTOM" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis side="LEFT" />
+                                 </yAxis>
+                              </LineChart>
+                              <BarChart fx:id="newUser_barChart">
+                                 <xAxis>
+                                    <CategoryAxis side="BOTTOM" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis side="LEFT" />
+                                 </yAxis>
+                              </BarChart>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</Pane>
