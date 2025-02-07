@@ -1,9 +1,9 @@
 package com.github.JuanManuel.utils;
 
-import com.github.JuanManuel.model.DAOs.huellaDAO;
 import com.github.JuanManuel.model.entities.*;
 import com.github.JuanManuel.model.services.actividadService;
 import com.github.JuanManuel.model.services.categoriaService;
+import com.github.JuanManuel.model.services.huellaService;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -17,6 +17,8 @@ import javafx.stage.FileChooser;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import java.awt.image.BufferedImage;
@@ -24,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,28 +87,11 @@ public class PDFmanager {
             }
             document.add(recomTable);
 
-            List<Object[]> countResults = huellaDAO.build().countByCategoria(Session.getInstance().getCurrentUser());
-            DefaultPieDataset dataset = new DefaultPieDataset();
-            for (Object[] o : countResults) {
-                String cat = (String) o[0];
-                Long count = (Long) o[1];
-                dataset.setValue(cat, count);
-            }
+            List<Object[]> countResults = huellaService.build().countByCategorias(Session.getInstance().getCurrentUser());
+            addPieChart(document, countResults);
 
-            JFreeChart chart = ChartFactory.createRingChart(
-                    "Categoría de Huellas",
-                    dataset,
-                    true,
-                    true,
-                    false
-            );
-
-            BufferedImage bufferedImage = chart.createBufferedImage(500, 500);
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ChartUtils.writeBufferedImageAsPNG(byteArrayOutputStream, bufferedImage);
-            ImageData imageData = ImageDataFactory.create(byteArrayOutputStream.toByteArray());
-            Image image = new Image(imageData);
-            document.add(image);
+            List<Object[]> stats = huellaService.build().statsByMonth(currentUser);
+            addStatsChart(document, stats);
 
             document.close();
         } catch (FileNotFoundException e) {
@@ -115,6 +101,56 @@ public class PDFmanager {
         }
     }
 
+    private void addPieChart(Document document, List<Object[]> countResults) throws IOException {
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        for (Object[] o : countResults) {
+            String cat = (String) o[0];
+            Long count = (Long) o[1];
+            dataset.setValue(cat, count);
+        }
+
+        JFreeChart chart = ChartFactory.createRingChart(
+                "Categoría de Huellas",
+                dataset,
+                true,
+                true,
+                false
+        );
+
+        BufferedImage bufferedImage = chart.createBufferedImage(500, 500);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ChartUtils.writeBufferedImageAsPNG(byteArrayOutputStream, bufferedImage);
+        ImageData imageData = ImageDataFactory.create(byteArrayOutputStream.toByteArray());
+        Image image = new Image(imageData);
+        document.add(image);
+    }
+
+    private void addStatsChart(Document document, List<Object[]> monthlyStats) throws IOException {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        for (Object[] stat : monthlyStats) {
+            String month = (String) stat[0];
+            double impact = (double) stat[1];
+            dataset.addValue(impact, "Impact", month);
+        }
+
+        JFreeChart lineChart = ChartFactory.createLineChart(
+                "Evolución del Impacto Mensual",
+                "Mes",
+                "Impacto",
+                dataset,
+                PlotOrientation.VERTICAL,
+                false, // Desactivar la leyenda
+                true,
+                false
+        );
+
+        BufferedImage bufferedImage = lineChart.createBufferedImage(500, 300);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ChartUtils.writeBufferedImageAsPNG(byteArrayOutputStream, bufferedImage);
+        ImageData imageData = ImageDataFactory.create(byteArrayOutputStream.toByteArray());
+        Image image = new Image(imageData);
+        document.add(image);
+    }
     private double calculateImpact(Huella huella) {
         Double result = 0.0;
         try {

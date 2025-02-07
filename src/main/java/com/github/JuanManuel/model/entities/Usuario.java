@@ -3,7 +3,9 @@ package com.github.JuanManuel.model.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,10 +30,10 @@ public class Usuario {
     private LocalDate fechaRegistro;
 
     @OneToMany(mappedBy = "idUsuario")
-    private Set<Habito> habitos = new LinkedHashSet<>();
+    private List<Habito> habitos = new ArrayList<>();
 
     @OneToMany(mappedBy = "idUsuario")
-    private Set<Huella> huellas = new LinkedHashSet<>();
+    private List<Huella> huellas = new ArrayList<>();
 
     public Usuario() {
 
@@ -86,19 +88,19 @@ public class Usuario {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public Set<Habito> getHabitos() {
+    public List<Habito> getHabitos() {
         return habitos;
     }
 
-    public void setHabitos(Set<Habito> habitos) {
+    public void setHabitos(List<Habito> habitos) {
         this.habitos = habitos;
     }
 
-    public Set<Huella> getHuellas() {
+    public List<Huella> getHuellas() {
         return huellas;
     }
 
-    public void setHuellas(Set<Huella> huellas) {
+    public void setHuellas(List<Huella> huellas) {
         this.huellas = huellas;
     }
 

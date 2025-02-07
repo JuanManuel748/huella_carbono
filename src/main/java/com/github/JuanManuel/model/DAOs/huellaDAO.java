@@ -1,6 +1,7 @@
 package com.github.JuanManuel.model.DAOs;
 
 import com.github.JuanManuel.model.entities.Actividad;
+import com.github.JuanManuel.model.entities.Categoria;
 import com.github.JuanManuel.model.entities.Huella;
 import com.github.JuanManuel.model.entities.Usuario;
 import org.hibernate.Session;
@@ -97,7 +98,7 @@ public class huellaDAO implements DAO<Huella>{
         return ls;
     }
 
-    public List<Object[]> countByCategoria(Usuario u) {
+    public List<Object[]> countByCategorias(Usuario u) {
         Session sn = sessionFactory.openSession();
         List<Object[]> results = new ArrayList<>();
         String hql = "SELECT c.nombre, COUNT(h) " +
@@ -108,6 +109,74 @@ public class huellaDAO implements DAO<Huella>{
                 "GROUP BY c.nombre";
         Query<Object[]> query = sn.createQuery(hql, Object[].class);
         query.setParameter("userId", u);
+        results = query.list();
+        sn.close();
+        return results;
+    }
+
+    public List<Object[]> countByCat(Usuario u, Categoria c) {
+        Session sn = sessionFactory.openSession();
+        List<Object[]> results = new ArrayList<>();
+        String hql = "SELECT a.nombre, COUNT(h) " +
+                "FROM Huella h " +
+                "JOIN h.idActividad a " +
+                "JOIN a.idCategoria c " +
+                "WHERE h.idUsuario = :userId AND c.id = :catId " +
+                "GROUP BY a.nombre";
+        Query<Object[]> query = sn.createQuery(hql, Object[].class);
+        query.setParameter("userId", u);
+        query.setParameter("catId", c.getId());
+        results = query.list();
+        sn.close();
+        return results;
+    }
+
+    // huellaDAO.java
+    public List<Object[]> findWeeksByUsr(Usuario usr) {
+        Session sn = sessionFactory.openSession();
+        List<Object[]> results = new ArrayList<>();
+        String hql = "SELECT MIN(h.fecha), SUM(h.valor * c.factorEmision) " +
+                "FROM Huella h " +
+                "JOIN h.idActividad a " +
+                "JOIN a.idCategoria c " +
+                "WHERE h.idUsuario = :usr " +
+                "GROUP BY WEEK(h.fecha)" +
+                "ORDER BY WEEK(h.fecha)";
+        Query<Object[]> query = sn.createQuery(hql, Object[].class);
+        query.setParameter("usr", usr);
+        results = query.list();
+        sn.close();
+        return results;
+    }
+
+    public List<Object[]> findMonthsByUsr(Usuario usr) {
+        Session sn = sessionFactory.openSession();
+        List<Object[]> results = new ArrayList<>();
+        String hql = "SELECT YEAR(h.fecha), MONTH(h.fecha), SUM(h.valor * c.factorEmision) " +
+                "FROM Huella h " +
+                "JOIN h.idActividad a " +
+                "JOIN a.idCategoria c " +
+                "WHERE h.idUsuario = :usr " +
+                "GROUP BY YEAR(h.fecha), MONTH(h.fecha) " +
+                "ORDER BY YEAR(h.fecha), MONTH(h.fecha)";
+        Query<Object[]> query = sn.createQuery(hql, Object[].class);
+        query.setParameter("usr", usr);
+        results = query.list();
+        sn.close();
+        return results;
+    }
+
+    public List<Object[]> findYearsByUsr(Usuario usr) {
+        Session sn = sessionFactory.openSession();
+        List<Object[]> results = new ArrayList<>();
+        String hql = "SELECT YEAR(h.fecha), SUM(h.valor * c.factorEmision) " +
+                "FROM Huella h " +
+                "JOIN h.idActividad a " +
+                "JOIN a.idCategoria c " +
+                "WHERE h.idUsuario = :usr " +
+                "GROUP BY YEAR(h.fecha)";
+        Query<Object[]> query = sn.createQuery(hql, Object[].class);
+        query.setParameter("usr", usr);
         results = query.list();
         sn.close();
         return results;

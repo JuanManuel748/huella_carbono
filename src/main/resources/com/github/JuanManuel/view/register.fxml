@@ -25,10 +25,10 @@
                 <Font name="System Bold" size="72.0" />
             </font>
         </Text>
-        <GridPane layoutX="100.0" layoutY="170.0" prefHeight="300.0" prefWidth="600.0">
+        <GridPane layoutX="100.0" layoutY="170.0" prefHeight="300.0" prefWidth="573.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.39996337890625" minWidth="10.0" prefWidth="182.39996337890625" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.60003662109375" minWidth="10.0" prefWidth="417.60003662109375" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.39996337890625" minWidth="10.0" prefWidth="124.80001220703124" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="448.79998779296875" minWidth="10.0" prefWidth="448.79998779296875" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -37,7 +37,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Correo electrónico:" wrappingWidth="175.921875" GridPane.rowIndex="1">
+                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Correo electrónico:" wrappingWidth="118.3218994140625" GridPane.rowIndex="1">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
@@ -52,7 +52,7 @@
                         <Font name="System Bold" size="24.0" />
                     </font>
                 </Text>
-                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Repetir contraseña:" wrappingWidth="133.453125" GridPane.rowIndex="3">
+                <Text fill="#044004" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Repetir contraseña:" wrappingWidth="119.85308837890625" GridPane.rowIndex="3">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>

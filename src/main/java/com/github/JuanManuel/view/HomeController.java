@@ -74,7 +74,7 @@ public class HomeController  extends Controller implements Initializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        page_cho.setItems(observableArrayList("Huellas", "Hábitos"));
+        page_cho.setItems(observableArrayList("Huellas", "Hábitos", "Social"));
         page_cho.setOnAction(this::updatePage);
         page_cho.setValue("Huellas");
         updatePage(null);
@@ -85,12 +85,15 @@ public class HomeController  extends Controller implements Initializable {
 
     private void updatePage(javafx.event.Event event) {
         String page = page_cho.getValue().toString().toLowerCase();
-        if (page.equals("hábitos")) {
+        if (page.equalsIgnoreCase("hábitos")) {
             loadPage("habitos");
             page_cho.setValue("Hábitos");
-        } else if (page.equals("huellas")) {
+        } else if (page.equalsIgnoreCase("huellas")) {
             loadPage("huellas");
             page_cho.setValue("Huellas");
+        } else if (page.equalsIgnoreCase("Social")) {
+            loadPage("social");
+            page_cho.setValue("Social");
         }
     }
 
@@ -99,17 +102,13 @@ public class HomeController  extends Controller implements Initializable {
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource(page + ".fxml"));
-            if (!page.equals("huellas") && !page.equals("habitos")) {
+            if (!page.equals("huellas") && !page.equals("habitos") && !page.equals("social")) {
                 page_cho.setValue("");
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         page_pane.getChildren().setAll(root);
-
-
     }
 
     public void goToProfile(javafx.scene.input.MouseEvent mouseEvent) {

@@ -89,12 +89,7 @@ public class Categoria {
 
     @Override
     public String toString() {
-        return "Categoria{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", factorEmision=" + factorEmision +
-                ", unidad='" + unidad + '\'' +
-                '}';
+        return id + " - " + nombre;
     }
 
 }

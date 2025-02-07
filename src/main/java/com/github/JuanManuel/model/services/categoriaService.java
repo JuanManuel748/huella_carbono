@@ -95,16 +95,13 @@ public class categoriaService implements service<Categoria> {
 
     @Override
     public Categoria findByPK(Categoria pk) {
-        Categoria result = new Categoria();
+        Categoria result = null;
         try {
             if (pk != null) {
                 if (pk.getId() != null) {
                     result = categoriaDAO.build().findByPK(pk);
-                } else {
-                    nombre = pk.getNombre();
-                    if (nombre != null && nombre.isEmpty()) {
-                        result = categoriaDAO.build().findByName(pk);
-                    }
+                } else if (pk.getNombre() != null && !pk.getNombre().isEmpty()) {
+                    result = categoriaDAO.build().findByName(pk);
                 }
             }
         } catch (Exception e) {
