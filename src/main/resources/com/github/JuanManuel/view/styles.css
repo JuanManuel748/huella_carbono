@@ -47,6 +47,7 @@
 .text-field {
     -fx-background-color: #b8ecff;
     -fx-border-color: #35F0A7;
+    -fx-alignment: LEFT;
     -fx-border-width: 1px;
     -fx-background-radius: 15px;
     -fx-border-radius: 15px;

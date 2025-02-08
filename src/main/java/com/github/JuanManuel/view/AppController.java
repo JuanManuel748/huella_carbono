@@ -102,6 +102,5 @@ public class AppController extends Controller implements Initializable {
      */
     @Override
     public void onClose(Object output) {
-        // No specific close actions required
     }
 }

@@ -20,9 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -89,6 +87,9 @@ public class SocialController extends Controller implements Initializable {
         setGraphs();
     }
 
+    /**
+     * Changes the scene to the register view.
+     */
     private void updateImpact(Text vText, Usuario vUser) {
         double impact = 0.0;
         for (Huella huella : vUser.getHuellas()) {
@@ -97,6 +98,13 @@ public class SocialController extends Controller implements Initializable {
         impact = Math.round(impact * 1000.0) / 1000.0;
         vText.setText(String.valueOf(impact) + " (kg CO₂)");
     }
+
+    /**
+     * Calculates the impact of a footprint.
+     *
+     * @param huella the footprint to calculate the impact.
+     * @return the impact of the footprint.
+     */
     private double calculateImpact(Huella huella) {
         double result = 0.0;
         try {
@@ -111,6 +119,13 @@ public class SocialController extends Controller implements Initializable {
         }
         return result;
     }
+
+    /**
+     * Updates the bars of the chart.
+     *
+     * @param vLs    the list of objects to update the bars.
+     * @param vChart the chart to update.
+     */
     private void updateBars(List<Object[]> vLs, BarChart<String, Number> vChart) {
         vChart.getData().clear();
         vChart.setTitle("Nº de huellas\npor categoría");
@@ -123,6 +138,10 @@ public class SocialController extends Controller implements Initializable {
             vChart.getData().add(series);
         }
     }
+
+    /**
+     * Sets the categories filter.
+     */
     private void setCatsFilter() {
         List<Categoria> categorias = categoriaService.build().findAll();
         Categoria all = new Categoria();
@@ -137,6 +156,10 @@ public class SocialController extends Controller implements Initializable {
         filter_cho.getSelectionModel().selectFirst();
         filter_cho.setOnAction(this::filtByCat);
     }
+
+    /**
+     * Sets the date filter.
+     */
     private void setDateFilter() {
         filter_cho.setOnAction(this::filtByDate);
         ObservableList<String> dates = observableArrayList("Diario", "Semanal", "Mensual", "Anual");
@@ -144,6 +167,13 @@ public class SocialController extends Controller implements Initializable {
         filter_cho.setValue("Mensual");
 
     }
+
+    /**
+     * Updates the line of the chart.
+     *
+     * @param vLs    the list of objects to update the line.
+     * @param vChart the chart to update.
+     */
     private void updateLine(List<Object[]> vLs, LineChart<String, Number> vChart) {
         vChart.getData().clear();
         vChart.setLegendVisible(false);
@@ -163,6 +193,12 @@ public class SocialController extends Controller implements Initializable {
         }
         vChart.getData().add(series);
     }
+
+    /**
+     * Alternates the graphics of the chart.
+     *
+     * @param activated true if the line chart is activated, false otherwise.
+     */
     private void alternateGraphics(boolean activated) {
         currentUser_line.getData().clear();
         newUser_line.getData().clear();
@@ -178,6 +214,12 @@ public class SocialController extends Controller implements Initializable {
         currentUser_barChart.setManaged(!activated);
         newUser_barChart.setManaged(!activated);
     }
+
+    /**
+     * Searches for a user.
+     *
+     * @param mouseEvent the mouse event.
+     */
     @FXML
     public void search(MouseEvent mouseEvent) {
 
@@ -194,6 +236,12 @@ public class SocialController extends Controller implements Initializable {
             Alert.showAlert("ERROR", "Correo electrónico inválido", "El correo electrónico proporcionado no es válido");
         }
     }
+
+    /**
+     * Validates the search.
+     *
+     * @return true if the search is valid, false otherwise.
+     */
     private boolean validateSearch() {
         boolean result = false;
         try {
@@ -208,6 +256,11 @@ public class SocialController extends Controller implements Initializable {
         return result;
     }
 
+    /**
+     * Sets the new user.
+     *
+     * @param vnewUser the new user to set.
+     */
     private void setNewUser(Usuario vnewUser) {
         newUser = vnewUser;
         newUser.setHuellas(huellaService.build().findByUser(newUser));
@@ -221,18 +274,31 @@ public class SocialController extends Controller implements Initializable {
             updateBars(countResults, newUser_barChart);
         }
     }
+
+    /**
+     * Sets the current user.
+     */
     private void setCurrentUsr() {
         currentUser = Session.getInstance().getCurrentUser();
         currentUser.setHuellas(huellaService.build().findByUser(currentUser));
         updateImpact(currentUser_impact, currentUser);
     }
 
+    /**
+     * Sets the graphs.
+     */
     private void setGraphs() {
         grachic_cho.setItems(observableArrayList("Categoria", "Historial"));
         grachic_cho.setOnAction(this::updateGraph);
         grachic_cho.getSelectionModel().selectFirst();
         updateGraph(null);
     }
+
+    /**
+     * Updates the graph.
+     *
+     * @param event the event.
+     */
     private void updateGraph(Event event) {
         String selected = grachic_cho.getSelectionModel().getSelectedItem().toString();
         if (selected.equalsIgnoreCase("Historial")) {
@@ -242,6 +308,9 @@ public class SocialController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Sets the categories.
+     */
     private void setCategories() {
         alternateGraphics(false);
         setCatsFilter();
@@ -255,6 +324,9 @@ public class SocialController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Sets the history.
+     */
     private void setHistorial() {
         alternateGraphics(true);
         setDateFilter();
@@ -268,11 +340,22 @@ public class SocialController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Filters by category.
+     *
+     * @param actionEvent the action event.
+     */
     private void filtByCat(ActionEvent actionEvent) {
         try {
             String catName = filter_cho.getSelectionModel().getSelectedItem();
             if (catName.equalsIgnoreCase("Todas")) {
                 setCategories();
+                currentUser.setHuellas(huellaService.build().findByUser(currentUser));
+                updateImpact(currentUser_impact, currentUser);
+                if (newUser != null) {
+                    newUser.setHuellas(huellaService.build().findByUser(newUser));
+                    updateImpact(newUser_impact, newUser);
+                }
             } else {
                 Categoria cat = new Categoria();
                 cat.setNombre(catName);
@@ -293,6 +376,11 @@ public class SocialController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Filters by date.
+     *
+     * @param actionEvent the action event.
+     */
     private void filtByDate(ActionEvent actionEvent) {
         String selected = filter_cho.getSelectionModel().getSelectedItem();
         if (selected == null) {
@@ -336,6 +424,12 @@ public class SocialController extends Controller implements Initializable {
 
     }
 
+    /**
+     * Updates the average.
+     *
+     * @param vText
+     * @param vLs
+     */
     private void updateAverage(Text vText, List<Object[]> vLs) {
         double impact = 0.0;
         for (Object[] o : vLs) {

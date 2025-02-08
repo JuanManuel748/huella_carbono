@@ -55,6 +55,9 @@ public class WelcomeController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Changes the scene to the login view.
+     */
     public void goLogin() throws Exception {
         App.currentController.changeScene(Scenes.LOGIN, null);
 

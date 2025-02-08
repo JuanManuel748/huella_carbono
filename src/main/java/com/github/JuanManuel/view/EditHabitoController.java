@@ -27,6 +27,10 @@ import java.util.ResourceBundle;
 import static com.github.JuanManuel.view.HuellasController.selected;
 import static javafx.collections.FXCollections.observableArrayList;
 
+/**
+ * Controller class for editing habits.
+ * Provides methods for initializing the view, setting activities, saving habits, and validating input.
+ */
 public class EditHabitoController extends Controller implements Initializable {
 
     @FXML
@@ -39,7 +43,6 @@ public class EditHabitoController extends Controller implements Initializable {
     public DatePicker date_input;
     @FXML
     public ImageView preview_img;
-
 
     List<Actividad> act_ls = new ArrayList<>();
     Habito currentHabito = new Habito();
@@ -83,24 +86,62 @@ public class EditHabitoController extends Controller implements Initializable {
         type_cho.setItems(observableArrayList("Diario", "Semanal", "Mensual"));
     }
 
+    /**
+     * Sets the current activity to the selected one in the ComboBox.
+     */
     private void setAct() {
         currentAct = act_cho.getSelectionModel().getSelectedItem();
         preview_img.setImage(new Image(getClass().getResource("/com/github/JuanManuel/assets/img/acts/act_"+currentAct.getId()+".jpg").toExternalForm()));
     }
 
+    /**
+     * Saves the habit to the database.
+     *
+     * @param actionEvent the event that triggered the action.
+     */
     public void save(ActionEvent actionEvent) {
         try {
-            currentHabito = new Habito(Session.getInstance().getCurrentUser(), currentAct);
-            currentHabito.setFrecuencia(frec_input.getValue());
-            currentHabito.setTipo(type_cho.getValue());
-            currentHabito.setUltimaFecha(date_input.getValue());
-            if (habitoService.build().insert(currentHabito)) {
-                Alert.showAlert("INFORMATION", "Habito guardado", "El habito se ha guardado correctamente.");
-            } else {
-                Alert.showAlert("ERROR", "Error al guardar", "No se ha podido guardar el habito.");
+            if (validate()) {
+                if (habitoService.build().insert(currentHabito)) {
+                    Alert.showAlert("INFORMATION", "Habito guardado", "El habito se ha guardado correctamente.");
+                } else {
+                    Alert.showAlert("ERROR", "Error al guardar", "No se ha podido guardar el habito.");
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Validates the input fields and sets the current habit object.
+     *
+     * @return true if the input is valid, false otherwise.
+     */
+    private boolean validate() {
+        boolean result = false;
+        try {
+            if (currentAct != null && frec_input.getValue() != null && type_cho.getValue() != null && date_input.getValue() != null) {
+                if(frec_input.getValue() > 0) {
+                    if (!date_input.getValue().isAfter(LocalDate.now())) {
+                        currentHabito = new Habito(Session.getInstance().getCurrentUser(), currentAct);
+                        currentHabito.setFrecuencia(frec_input.getValue());
+                        currentHabito.setTipo(type_cho.getValue());
+                        currentHabito.setUltimaFecha(date_input.getValue());
+                        result = true;
+                    } else {
+                        Alert.showAlert("ERROR", "Fecha inválida", "La fecha debe ser anterior o igual a la actual.");
+                    }
+                } else {
+                    Alert.showAlert("ERROR", "Frecuencia inválida", "La frecuencia debe ser mayor a 0.");
+                }
+            } else {
+                Alert.showAlert("ERROR", "Campos vacíos", "Por favor, rellene todos los campos.");
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return result;
     }
 }

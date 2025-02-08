@@ -41,6 +41,13 @@ public class Alert {
         al.showAndWait();
     }
 
+    /**
+     * Displays a confirmation dialog with the specified title and content.
+     *
+     * @param title   The title of the confirmation dialog.
+     * @param content The message to be displayed in the confirmation dialog.
+     * @return true if the user confirms, false otherwise.
+     */
     public static boolean showConfirmation(String title, String content) {
         boolean result = false;
         javafx.scene.control.Alert al = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.CONFIRMATION);
@@ -51,10 +58,16 @@ public class Alert {
         return result;
     }
 
-
+    /**
+     * Displays a choice dialog with the specified title and options.
+     *
+     * @param title   The title of the choice dialog.
+     * @param options The options to be displayed in the choice dialog.
+     * @return the selected option as a string, or "cancel" if no option is selected.
+     */
     public static String showChoice(String title, String[] options) {
         String resultST = "cancel";
-        javafx.scene.control.Alert  alert = new javafx.scene.control.Alert (javafx.scene.control.Alert.AlertType.CONFIRMATION);
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.CONFIRMATION);
         alert.setTitle("Elige una opción");
         alert.setHeaderText(title);
         alert.getButtonTypes().clear();

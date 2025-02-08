@@ -7,12 +7,15 @@ import com.github.JuanManuel.model.entities.Huella;
 import com.github.JuanManuel.model.entities.Usuario;
 
 import java.math.BigDecimal;
-import java.nio.DoubleBuffer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class huellaService implements service<Huella>{
+/**
+ * Service class for managing Huella entities.
+ * Provides methods to perform CRUD operations and validation.
+ */
+public class huellaService implements service<Huella> {
     private Integer id;
     private Usuario user;
     private Actividad act;
@@ -20,6 +23,12 @@ public class huellaService implements service<Huella>{
     private String unidad;
     private LocalDate fecha;
 
+    /**
+     * Inserts a new Huella entity into the database.
+     *
+     * @param entity the Huella entity to be inserted.
+     * @return true if the insertion was successful.
+     */
     @Override
     public boolean insert(Huella entity) {
         boolean result = false;
@@ -44,6 +53,12 @@ public class huellaService implements service<Huella>{
         return result;
     }
 
+    /**
+     * Updates an existing Huella entity in the database.
+     *
+     * @param entity the Huella entity to be updated.
+     * @return true if the update was successful.
+     */
     @Override
     public boolean update(Huella entity) {
         boolean result = false;
@@ -52,7 +67,7 @@ public class huellaService implements service<Huella>{
                 Huella tempHu = huellaDAO.build().findByPK(entity);
                 if (tempHu != null) {
                     if (validate(entity)) {
-                        if(huellaDAO.build().update(entity)) {
+                        if (huellaDAO.build().update(entity)) {
                             result = true;
                         }
                     }
@@ -64,9 +79,15 @@ public class huellaService implements service<Huella>{
         return result;
     }
 
+    /**
+     * Deletes an existing Huella entity from the database.
+     *
+     * @param entity the Huella entity to be deleted.
+     * @return true if the deletion was successful.
+     */
     @Override
     public boolean delete(Huella entity) {
-        boolean result = true;
+        boolean result = false;
         try {
             if (entity.getId() != null) {
                 Huella tempHu = huellaDAO.build().findByPK(entity);
@@ -80,10 +101,15 @@ public class huellaService implements service<Huella>{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         return result;
     }
 
+    /**
+     * Finds a Huella entity by its primary key.
+     *
+     * @param pk the primary key of the Huella entity to be found.
+     * @return the found Huella entity, or null if not found.
+     */
     @Override
     public Huella findByPK(Huella pk) {
         Huella result = new Huella();
@@ -94,10 +120,14 @@ public class huellaService implements service<Huella>{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         return result;
     }
 
+    /**
+     * Finds all Huella entities in the database.
+     *
+     * @return a list of all Huella entities.
+     */
     @Override
     public List<Huella> findAll() {
         List<Huella> ls = new ArrayList<>();
@@ -109,7 +139,12 @@ public class huellaService implements service<Huella>{
         return ls;
     }
 
-
+    /**
+     * Finds Huella entities by the associated Usuario.
+     *
+     * @param u the Usuario entity to search by.
+     * @return a list of Huella entities associated with the given Usuario.
+     */
     public List<Huella> findByUser(Usuario u) {
         List<Huella> ls = new ArrayList<>();
         try {
@@ -125,6 +160,12 @@ public class huellaService implements service<Huella>{
         return ls;
     }
 
+    /**
+     * Finds Huella entities by the associated Actividad.
+     *
+     * @param act the Actividad entity to search by.
+     * @return a list of Huella entities associated with the given Actividad.
+     */
     public List<Huella> findByAct(Actividad act) {
         List<Huella> ls = new ArrayList<>();
         try {
@@ -140,6 +181,14 @@ public class huellaService implements service<Huella>{
         return ls;
     }
 
+    /**
+     * Finds Huella entities by a date range and associated Usuario.
+     *
+     * @param min the start date of the range.
+     * @param max the end date of the range.
+     * @param u the Usuario entity to search by.
+     * @return a list of Huella entities within the given date range and associated with the given Usuario.
+     */
     public List<Huella> findByDateRange(LocalDate min, LocalDate max, Usuario u) {
         List<Huella> ls = new ArrayList<>();
         try {
@@ -157,6 +206,13 @@ public class huellaService implements service<Huella>{
         return ls;
     }
 
+    /**
+     * Finds Huella entities by the associated Usuario and filtered by Categoria.
+     *
+     * @param u the Usuario entity to search by.
+     * @param c the Categoria entity to filter by.
+     * @return a list of Huella entities associated with the given Usuario and filtered by the given Categoria.
+     */
     public List<Huella> findByUserFiltByCat(Usuario u, Categoria c) {
         List<Huella> ls = new ArrayList<>();
         try {
@@ -177,6 +233,12 @@ public class huellaService implements service<Huella>{
         return ls;
     }
 
+    /**
+     * Validates a Huella entity.
+     *
+     * @param entity the Huella entity to be validated.
+     * @return true if the entity is valid.
+     */
     @Override
     public boolean validate(Huella entity) {
         boolean result = false;
@@ -188,7 +250,7 @@ public class huellaService implements service<Huella>{
         unidad = entity.getUnidad();
         fecha = entity.getFecha();
 
-        if (user != null && act != null && unidad!= null && !unidad.isEmpty() && fecha != null) {
+        if (user != null && act != null && unidad != null && !unidad.isEmpty() && fecha != null) {
             if (valor.compareTo(BigDecimal.ZERO) > 0) {
                 result = true;
             }
@@ -196,6 +258,12 @@ public class huellaService implements service<Huella>{
         return result;
     }
 
+    /**
+     * Counts Huella entities by Categoria for a given Usuario.
+     *
+     * @param u the Usuario entity to search by.
+     * @return a list of counts of Huella entities grouped by Categoria.
+     */
     public List<Object[]> countByCategorias(Usuario u) {
         List<Object[]> ls = new ArrayList<>();
         try {
@@ -211,6 +279,13 @@ public class huellaService implements service<Huella>{
         return ls;
     }
 
+    /**
+     * Counts Huella entities by a specific Categoria for a given Usuario.
+     *
+     * @param u the Usuario entity to search by.
+     * @param c the Categoria entity to filter by.
+     * @return a list of counts of Huella entities for the given Categoria.
+     */
     public List<Object[]> countByCat(Usuario u, Categoria c) {
         List<Object[]> ls = new ArrayList<>();
         try {
@@ -231,8 +306,12 @@ public class huellaService implements service<Huella>{
         return ls;
     }
 
-
-
+    /**
+     * Groups Huella entities by week for a given Usuario.
+     *
+     * @param u the Usuario entity to search by.
+     * @return a list of weekly grouped Huella entities.
+     */
     public List<Object[]> groupByWeek(Usuario u) {
         List<Object[]> weeklyImpacts = new ArrayList<>();
         try {
@@ -248,6 +327,12 @@ public class huellaService implements service<Huella>{
         return weeklyImpacts;
     }
 
+    /**
+     * Groups Huella entities by month for a given Usuario.
+     *
+     * @param u the Usuario entity to search by.
+     * @return a list of monthly grouped Huella entities.
+     */
     public List<Object[]> groupByMonth(Usuario u) {
         List<Object[]> monthlyImpacts = new ArrayList<>();
         try {
@@ -263,6 +348,12 @@ public class huellaService implements service<Huella>{
         return monthlyImpacts;
     }
 
+    /**
+     * Groups Huella entities by year for a given Usuario.
+     *
+     * @param u the Usuario entity to search by.
+     * @return a list of yearly grouped Huella entities.
+     */
     public List<Object[]> groupByYear(Usuario u) {
         List<Object[]> yearlyImpacts = new ArrayList<>();
         try {
@@ -278,12 +369,16 @@ public class huellaService implements service<Huella>{
         return yearlyImpacts;
     }
 
-
+    /**
+     * Generates weekly statistics for Huella entities for a given Usuario.
+     *
+     * @param u the Usuario entity to search by.
+     * @return a list of weekly statistics for Huella entities.
+     */
     public List<Object[]> statsByWeek(Usuario u) {
         List<Object[]> weeklyStats = new ArrayList<>();
         try {
             List<Object[]> weeks = groupByWeek(u);
-
             for (Object[] o : weeks) {
                 String startDate = o[0].toString();
                 double impact = Double.parseDouble(o[1].toString());
@@ -300,11 +395,16 @@ public class huellaService implements service<Huella>{
         return weeklyStats;
     }
 
+    /**
+     * Generates monthly statistics for Huella entities for a given Usuario.
+     *
+     * @param u the Usuario entity to search by.
+     * @return a list of monthly statistics for Huella entities.
+     */
     public List<Object[]> statsByMonth(Usuario u) {
         List<Object[]> monthlyStats = new ArrayList<>();
         try {
             List<Object[]> months = groupByMonth(u);
-
             for (Object[] o : months) {
                 int year = Integer.parseInt(o[0].toString());
                 LocalDate monthV = LocalDate.of(year, Integer.parseInt(o[1].toString()), 1);
@@ -318,11 +418,16 @@ public class huellaService implements service<Huella>{
         return monthlyStats;
     }
 
+    /**
+     * Generates yearly statistics for Huella entities for a given Usuario.
+     *
+     * @param u the Usuario entity to search by.
+     * @return a list of yearly statistics for Huella entities.
+     */
     public List<Object[]> statsByYear(Usuario u) {
         List<Object[]> yearlyStats = new ArrayList<>();
         try {
             List<Object[]> years = groupByYear(u);
-
             for (Object[] o : years) {
                 int year = Integer.parseInt(o[0].toString());
                 double impact = Double.parseDouble(o[1].toString());
@@ -334,6 +439,12 @@ public class huellaService implements service<Huella>{
         return yearlyStats;
     }
 
+    /**
+     * Generates daily statistics for Huella entities for a given Usuario.
+     *
+     * @param u the Usuario entity to search by.
+     * @return a list of daily statistics for Huella entities.
+     */
     public List<Object[]> statsByDay(Usuario u) {
         List<Object[]> dailyStats = new ArrayList<>();
         try {
@@ -349,8 +460,11 @@ public class huellaService implements service<Huella>{
         return dailyStats;
     }
 
-
-
+    /**
+     * Builds a new instance of huellaService.
+     *
+     * @return a new instance of huellaService.
+     */
     public static huellaService build() {
         return new huellaService();
     }
