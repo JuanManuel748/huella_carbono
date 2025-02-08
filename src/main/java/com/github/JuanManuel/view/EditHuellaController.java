@@ -108,22 +108,42 @@ public class EditHuellaController extends Controller implements Initializable {
 
     public void save(ActionEvent actionEvent) {
         try {
-            currentHuella.setIdActividad(currentAct);
-            currentHuella.setValor(BigDecimal.valueOf(valor_input.getValue()));
-            currentHuella.setUnidad(unidad_txt.getText());
-            currentHuella.setFecha(date_input.getValue());
-            currentHuella.setIdUsuario(Session.getInstance().getCurrentUser());
-            if (huellaService.build().insert(currentHuella)) {
-                Alert.showAlert("INFORMATION", "Huella guardada", "La huella se ha guardado correctamente.");
-            } else if (huellaService.build().update(currentHuella)) {
-                Alert.showAlert("INFORMATION", "Huella actualizada", "La huella se ha actualizado correctamente.");
-            } else {
-                Alert.showAlert("ERROR", "Huella no guardada", "La huella no se ha podido guardar.");
+            if (validate()) {
+                if (huellaService.build().insert(currentHuella)) {
+                    Alert.showAlert("INFORMATION", "Huella guardada", "La huella se ha guardado correctamente.");
+                } else if (huellaService.build().update(currentHuella)) {
+                    Alert.showAlert("INFORMATION", "Huella actualizada", "La huella se ha actualizado correctamente.");
+                } else {
+                    Alert.showAlert("ERROR", "Huella no guardada", "La huella no se ha podido guardar.");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    private boolean validate() {
+        boolean result = false;
+        try {
+            if (valor_input.getValue() != null && valor_input.getValue() > 0) {
+                if (!date_input.getValue().isAfter(LocalDate.now())) {
+                    currentHuella.setIdActividad(currentAct);
+                    currentHuella.setValor(BigDecimal.valueOf(valor_input.getValue()));
+                    currentHuella.setUnidad(unidad_txt.getText());
+                    currentHuella.setFecha(date_input.getValue());
+                    currentHuella.setIdUsuario(Session.getInstance().getCurrentUser());
+                    result = true;
+                } else {
+                    Alert.showAlert("ERROR", "Fecha incorrecta", "La fecha de la huella no puede ser futura.");
+                }
+            } else {
+                Alert.showAlert("ERROR", "Valor incorrecto", "El valor de la huella no puede ser nulo ni menor que 0.");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return result;
     }
 
 }
