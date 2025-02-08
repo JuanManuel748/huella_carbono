@@ -89,7 +89,7 @@ public class RegisterController extends Controller implements Initializable {
 
         if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !repass.isEmpty()) {
             if (email.matches(email_regex)) {
-                if (password.equals(repass)) {
+                if (password.equals(repass) && password.length() >= 8) {
                     Usuario exists = usuarioService.build().findByPK(new Usuario(email));
                     if (exists == null) {
                         result = true;
@@ -97,7 +97,7 @@ public class RegisterController extends Controller implements Initializable {
                         Alert.showAlert("ERROR", "Usuario existente", "Ya existe un usuario con ese correo electrónico");
                     }
                 } else {
-                    Alert.showAlert("ERROR", "Contraseñas no coinciden", "Las contraseñas no coinciden");
+                    Alert.showAlert("ERROR", "Contraseñas  inválida", "Las contraseñas no coinciden o son demadiaso cortas");
                 }
             } else {
                 Alert.showAlert("ERROR", "Formato de correo inválido", "El correo debe tener un formato valido, por ejemplo: ejemplo@gmail.com");
