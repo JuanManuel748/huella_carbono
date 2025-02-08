@@ -20,9 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -273,6 +271,12 @@ public class SocialController extends Controller implements Initializable {
             String catName = filter_cho.getSelectionModel().getSelectedItem();
             if (catName.equalsIgnoreCase("Todas")) {
                 setCategories();
+                currentUser.setHuellas(huellaService.build().findByUser(currentUser));
+                updateImpact(currentUser_impact, currentUser);
+                if (newUser != null) {
+                    newUser.setHuellas(huellaService.build().findByUser(newUser));
+                    updateImpact(newUser_impact, newUser);
+                }
             } else {
                 Categoria cat = new Categoria();
                 cat.setNombre(catName);

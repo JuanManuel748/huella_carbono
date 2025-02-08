@@ -22,6 +22,9 @@ public class RegisterController extends Controller implements Initializable {
     @FXML
     public TextField repassField;
 
+    private String email_regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+
+
     /**
      * Called when the view is opened. This method is intended for any setup or initialization
      * operations when the controller is first initialized. In this case, it's empty.
@@ -85,15 +88,19 @@ public class RegisterController extends Controller implements Initializable {
         String repass = repassField.getText();
 
         if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !repass.isEmpty()) {
-            if (password.equals(repass)) {
-                Usuario exists = usuarioService.build().findByPK(new Usuario(email));
-                if (exists == null) {
-                    result = true;
+            if (email.matches(email_regex)) {
+                if (password.equals(repass)) {
+                    Usuario exists = usuarioService.build().findByPK(new Usuario(email));
+                    if (exists == null) {
+                        result = true;
+                    } else {
+                        Alert.showAlert("ERROR", "Usuario existente", "Ya existe un usuario con ese correo electrónico");
+                    }
                 } else {
-                    Alert.showAlert("ERROR", "Usuario existente", "Ya existe un usuario con ese correo electrónico");
+                    Alert.showAlert("ERROR", "Contraseñas no coinciden", "Las contraseñas no coinciden");
                 }
             } else {
-                Alert.showAlert("ERROR", "Contraseñas no coinciden", "Las contraseñas no coinciden");
+                Alert.showAlert("ERROR", "Formato de correo inválido", "El correo debe tener un formato valido, por ejemplo: ejemplo@gmail.com");
             }
         } else {
             Alert.showAlert("ERROR", "Campos vacíos", "Por favor, rellene todos los campos");
