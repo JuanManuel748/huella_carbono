@@ -157,6 +157,26 @@ public class huellaService implements service<Huella>{
         return ls;
     }
 
+    public List<Huella> findByUserFiltByCat(Usuario u, Categoria c) {
+        List<Huella> ls = new ArrayList<>();
+        try {
+            if (u.getId() != null || u.getEmail() != null) {
+                Usuario tempUser = usuarioService.build().findByPK(u);
+                if (tempUser != null) {
+                    if (c.getId() != null) {
+                        Categoria tempCat = categoriaService.build().findByPK(c);
+                        if (tempCat != null) {
+                            ls = huellaDAO.build().findByUserFiltByCat(tempUser, tempCat);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return ls;
+    }
+
     @Override
     public boolean validate(Huella entity) {
         boolean result = false;

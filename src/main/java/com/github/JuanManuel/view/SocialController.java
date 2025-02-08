@@ -52,8 +52,6 @@ public class SocialController extends Controller implements Initializable {
 
     private Usuario newUser = null;
     private Usuario currentUser = null;
-    private List<Huella> currentUserHuellas = null;
-    private List<Huella> newUserHuellas = null;
 
     private String email_regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
@@ -96,7 +94,8 @@ public class SocialController extends Controller implements Initializable {
         for (Huella huella : vUser.getHuellas()) {
             impact += calculateImpact(huella);
         }
-        vText.setText(String.valueOf(impact));
+        impact = Math.round(impact * 1000.0) / 1000.0;
+        vText.setText(String.valueOf(impact) + " (kg CO₂)");
     }
     private double calculateImpact(Huella huella) {
         double result = 0.0;
@@ -280,9 +279,13 @@ public class SocialController extends Controller implements Initializable {
                 cat = categoriaService.build().findByPK(cat);
                 List<Object[]> currentCount = huellaService.build().countByCat(currentUser, cat);
                 updateBars(currentCount, currentUser_barChart);
+                currentUser.setHuellas(huellaService.build().findByUserFiltByCat(currentUser, cat));
+                updateImpact(currentUser_impact, currentUser);
                 if (newUser != null) {
                     List<Object[]> newCount = huellaService.build().countByCat(newUser, cat);
                     updateBars(newCount, newUser_barChart);
+                    newUser.setHuellas(huellaService.build().findByUserFiltByCat(newUser, cat));
+                    updateImpact(newUser_impact, newUser);
                 }
             }
         } catch (Exception e) {
@@ -297,42 +300,50 @@ public class SocialController extends Controller implements Initializable {
         }
 
         List<Object[]> currentCount = new ArrayList<>();
+        List<Object[]> newCount = new ArrayList<>();
         switch (selected) {
             case "Diario":
                 currentCount = huellaService.build().statsByDay(currentUser);
-                updateLine(currentCount, currentUser_line);
                 if (newUser != null) {
-                    List<Object[]> newCount = huellaService.build().statsByDay(newUser);
-                    updateLine(newCount, newUser_line);
+                    newCount = huellaService.build().statsByDay(newUser);
                 }
                 break;
             case "Semanal":
                 currentCount = huellaService.build().statsByWeek(currentUser);
-                updateLine(currentCount, currentUser_line);
                 if (newUser != null) {
-                    List<Object[]> newCount = huellaService.build().statsByWeek(newUser);
-                    updateLine(newCount, newUser_line);
+                    newCount = huellaService.build().statsByWeek(newUser);
                 }
                 break;
             case "Mensual":
                 currentCount = huellaService.build().statsByMonth(currentUser);
-                updateLine(currentCount, currentUser_line);
                 if (newUser != null) {
-                    List<Object[]> newCount = huellaService.build().statsByMonth(newUser);
-                    updateLine(newCount, newUser_line);
+                    newCount = huellaService.build().statsByMonth(newUser);
                 }
                 break;
             case "Anual":
                 currentCount = huellaService.build().statsByYear(currentUser);
-                updateLine(currentCount, currentUser_line);
                 if (newUser != null) {
-                    List<Object[]> newCount = huellaService.build().statsByYear(newUser);
-                    updateLine(newCount, newUser_line);
+                    newCount = huellaService.build().statsByYear(newUser);
                 }
                 break;
             default:
                 break;
         }
+        updateLine(currentCount, currentUser_line);
+        updateLine(newCount, newUser_line);
+        updateAverage(currentUser_impact, currentCount);
+        updateAverage(newUser_impact, newCount);
+
+    }
+
+    private void updateAverage(Text vText, List<Object[]> vLs) {
+        double impact = 0.0;
+        for (Object[] o : vLs) {
+            impact += Double.parseDouble(o[1].toString());
+        }
+        impact = impact / vLs.size();
+        impact = Math.round(impact * 1000.0) / 1000.0;
+        vText.setText(String.valueOf(impact) + " (kg CO₂)");
     }
 
 }
