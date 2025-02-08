@@ -98,6 +98,17 @@ public class huellaDAO implements DAO<Huella>{
         return ls;
     }
 
+    public List<Huella> findByUserFiltByCat(Usuario u, Categoria c) {
+        Session sn = sessionFactory.openSession();
+        List<Huella> ls = new ArrayList<>();
+        Query<Huella> all = sn.createQuery("from Huella h where h.idUsuario = :usr and h.idActividad.idCategoria = :cat", Huella.class);
+        all.setParameter("usr", u);
+        all.setParameter("cat", c);
+        ls = all.list();
+        sn.close();
+        return ls;
+    }
+
     public List<Object[]> countByCategorias(Usuario u) {
         Session sn = sessionFactory.openSession();
         List<Object[]> results = new ArrayList<>();
