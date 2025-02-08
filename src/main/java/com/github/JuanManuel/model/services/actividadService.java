@@ -5,20 +5,29 @@ import com.github.JuanManuel.model.entities.Actividad;
 import com.github.JuanManuel.model.entities.Categoria;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-public class actividadService implements service<Actividad>{
+/**
+ * Service class for managing Actividad entities.
+ * Provides methods to perform CRUD operations and validation.
+ */
+public class actividadService implements service<Actividad> {
     private Integer id;
     private String nombre;
     private Integer id_categoria;
     private Categoria categoria;
 
+    /**
+     * Inserts a new Actividad entity into the database.
+     *
+     * @param entity the Actividad entity to be inserted.
+     * @return true if the insertion was successful.
+     */
     @Override
     public boolean insert(Actividad entity) {
         boolean result = false;
         try {
-            if(validate(entity)) {
+            if (validate(entity)) {
                 Actividad tempAct = actividadDAO.build().findByName(entity);
                 if (tempAct == null) {
                     if (actividadDAO.build().insert(entity)) {
@@ -29,10 +38,15 @@ public class actividadService implements service<Actividad>{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         return result;
     }
 
+    /**
+     * Updates an existing Actividad entity in the database.
+     *
+     * @param entity the Actividad entity to be updated.
+     * @return true if the update was successful.
+     */
     @Override
     public boolean update(Actividad entity) {
         boolean result = false;
@@ -60,10 +74,15 @@ public class actividadService implements service<Actividad>{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         return result;
     }
 
+    /**
+     * Deletes an existing Actividad entity from the database.
+     *
+     * @param entity the Actividad entity to be deleted.
+     * @return true if the deletion was successful.
+     */
     @Override
     public boolean delete(Actividad entity) {
         boolean result = false;
@@ -88,10 +107,15 @@ public class actividadService implements service<Actividad>{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         return result;
     }
 
+    /**
+     * Finds an Actividad entity by its primary key.
+     *
+     * @param pk the primary key of the Actividad entity to be found.
+     * @return the found Actividad entity, or null if not found.
+     */
     @Override
     public Actividad findByPK(Actividad pk) {
         Actividad result = new Actividad();
@@ -111,6 +135,11 @@ public class actividadService implements service<Actividad>{
         return result;
     }
 
+    /**
+     * Finds all Actividad entities in the database.
+     *
+     * @return a list of all Actividad entities.
+     */
     @Override
     public List<Actividad> findAll() {
         List<Actividad> ls = new ArrayList<>();
@@ -120,9 +149,14 @@ public class actividadService implements service<Actividad>{
             throw new RuntimeException(e);
         }
         return ls;
-
     }
 
+    /**
+     * Validates an Actividad entity.
+     *
+     * @param entity the Actividad entity to be validated.
+     * @return true if the entity is valid.
+     */
     @Override
     public boolean validate(Actividad entity) {
         boolean result = false;
@@ -139,6 +173,11 @@ public class actividadService implements service<Actividad>{
         return result;
     }
 
+    /**
+     * Builds a new instance of actividadService.
+     *
+     * @return a new instance of actividadService.
+     */
     public static actividadService build() {
         return new actividadService();
     }

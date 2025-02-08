@@ -27,6 +27,10 @@ import java.util.ResourceBundle;
 import static com.github.JuanManuel.view.HuellasController.selected;
 import static javafx.collections.FXCollections.observableArrayList;
 
+/**
+ * Controller class for editing habits.
+ * Provides methods for initializing the view, setting activities, saving habits, and validating input.
+ */
 public class EditHabitoController extends Controller implements Initializable {
 
     @FXML
@@ -39,7 +43,6 @@ public class EditHabitoController extends Controller implements Initializable {
     public DatePicker date_input;
     @FXML
     public ImageView preview_img;
-
 
     List<Actividad> act_ls = new ArrayList<>();
     Habito currentHabito = new Habito();
@@ -83,12 +86,19 @@ public class EditHabitoController extends Controller implements Initializable {
         type_cho.setItems(observableArrayList("Diario", "Semanal", "Mensual"));
     }
 
-
+    /**
+     * Sets the current activity to the selected one in the ComboBox.
+     */
     private void setAct() {
         currentAct = act_cho.getSelectionModel().getSelectedItem();
         preview_img.setImage(new Image(getClass().getResource("/com/github/JuanManuel/assets/img/acts/act_"+currentAct.getId()+".jpg").toExternalForm()));
     }
 
+    /**
+     * Saves the habit to the database.
+     *
+     * @param actionEvent the event that triggered the action.
+     */
     public void save(ActionEvent actionEvent) {
         try {
             if (validate()) {
@@ -103,6 +113,11 @@ public class EditHabitoController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Validates the input fields and sets the current habit object.
+     *
+     * @return true if the input is valid, false otherwise.
+     */
     private boolean validate() {
         boolean result = false;
         try {
@@ -115,7 +130,7 @@ public class EditHabitoController extends Controller implements Initializable {
                         currentHabito.setUltimaFecha(date_input.getValue());
                         result = true;
                     } else {
-                        Alert.showAlert("ERROR", "Fecha inválida", "La fecha debe ser posterior a la actual.");
+                        Alert.showAlert("ERROR", "Fecha inválida", "La fecha debe ser anterior o igual a la actual.");
                     }
                 } else {
                     Alert.showAlert("ERROR", "Frecuencia inválida", "La frecuencia debe ser mayor a 0.");

@@ -20,18 +20,20 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 
-import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing huellas.
+ * Provides methods for initializing the view, setting up tables, handling table selection, and performing CRUD operations on huellas.
+ */
 public class HuellasController extends Controller implements Initializable {
     @FXML
-    public ComboBox frec_cho;
+    public ComboBox<String> frec_cho;
     @FXML
     public Text impact_txt;
     @FXML
@@ -80,7 +82,6 @@ public class HuellasController extends Controller implements Initializable {
     @Override
     public void onClose(Object output) {}
 
-
     /**
      * Initializes the controller. This method is part of the Initializable interface and
      * is called when the controller is initialized.
@@ -96,17 +97,24 @@ public class HuellasController extends Controller implements Initializable {
         after_date.setValue(LocalDate.now());
     }
 
+    /**
+     * Sets up the tables in the view.
+     */
     private void setupTables() {
-        // Iniciar la tabla de huellas
         huellas_ls = huellaService.build().findByUser(Session.getInstance().getCurrentUser());
         setUpHuellas(huellas_ls);
         reloadCalc();
     }
 
+    /**
+     * Sets up the huellas table with the given list of huellas.
+     *
+     * @param huellasLs the list of huellas to display in the table.
+     */
     private void setUpHuellas(List<Huella> huellasLs) {
         huella_table.setItems(FXCollections.observableArrayList(huellas_ls));
         act_col.setCellValueFactory(cellData -> {
-            Huella huella = (Huella) cellData.getValue();
+            Huella huella = cellData.getValue();
             Actividad act = huella.getIdActividad();
             act = actividadService.build().findByPK(act);
             return new SimpleStringProperty(act.getNombre());
@@ -115,14 +123,18 @@ public class HuellasController extends Controller implements Initializable {
         unidad_col.setCellValueFactory(new PropertyValueFactory<>("unidad"));
         date_col.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         impact_col.setCellValueFactory(cellData -> {
-            Huella huella = (Huella) cellData.getValue();
+            Huella huella = cellData.getValue();
             return new SimpleDoubleProperty(calculateImpact(huella)).asObject();
         });
-        huella_table.setOnMouseClicked(event -> handleTableSelection(event));
+        huella_table.setOnMouseClicked(this::handleTableSelection);
     }
 
-
-
+    /**
+     * Calculates the impact of a given huella.
+     *
+     * @param huella the huella to calculate the impact for.
+     * @return the impact of the huella.
+     */
     private double calculateImpact(Huella huella) {
         Double result = 0.0;
         try {
@@ -138,14 +150,16 @@ public class HuellasController extends Controller implements Initializable {
         return result;
     }
 
+    /**
+     * Handles the selection of a row in the huellas table.
+     *
+     * @param event the mouse event that triggered the selection.
+     */
     private void handleTableSelection(MouseEvent event) {
         try {
             if (event.getClickCount() == 1) {
                 selected = huella_table.getSelectionModel().getSelectedItem();
-                List<Huella> tempLs = new ArrayList<>();
-                tempLs.add(selected);
-                if (selected != null) {
-                } else {
+                if (selected == null) {
                     Alert.showAlert("ERROR", "Ninguna huella seleccionada", "Haz clic en una huella para seleccionarla.");
                 }
             }
@@ -162,12 +176,17 @@ public class HuellasController extends Controller implements Initializable {
         }
     }
 
-
+    /**
+     * Handles the click on the "Añadir" button.
+     */
     public void add() {
         selected = new Huella();
         goToEdit();
     }
 
+    /**
+     * Handles the click on the "Editar" button.
+     */
     public void goToEdit() {
         try {
             HomeController homeController = (HomeController) App.getController("home");
@@ -177,10 +196,15 @@ public class HuellasController extends Controller implements Initializable {
         }
     }
 
-
+    /**
+     * Handles the click on the "Filtrar" button.
+     *
+     * @param actionEvent the event that triggered the action.
+     */
     public void filtHuellas(ActionEvent actionEvent) {
         String[] options = {"Último día", "Última semana", "Último mes", "Último año", "Todo", "Fecha personalizada"};
-        String resultAlert = Alert.showChoice("¿Cómo quieres filtrar las huellas?", options).toLowerCase();        LocalDate before = LocalDate.now().minusYears(2);
+        String resultAlert = Alert.showChoice("¿Cómo quieres filtrar las huellas?", options).toLowerCase();
+        LocalDate before = LocalDate.now().minusYears(2);
         LocalDate after = LocalDate.now();
         switch (resultAlert) {
             case "fecha personalizada":
@@ -215,6 +239,9 @@ public class HuellasController extends Controller implements Initializable {
         filt();
     }
 
+    /**
+     * Filters the huellas table by the selected date range.
+     */
     private void filt() {
         LocalDate before = before_date.getValue();
         LocalDate after = after_date.getValue();
@@ -223,6 +250,11 @@ public class HuellasController extends Controller implements Initializable {
         reloadCalc();
     }
 
+    /**
+     * Handles the click on the "Eliminar" button.
+     *
+     * @param actionEvent the event that triggered the action.
+     */
     public void delete(ActionEvent actionEvent) {
         selected = huella_table.getSelectionModel().getSelectedItem();
         if (selected != null) {
@@ -232,21 +264,26 @@ public class HuellasController extends Controller implements Initializable {
                     reloadCalc();
                 }
             }
-        }  else {
-            Alert.showAlert("ERROR", "Ninguna huella seleccionado", "Haz clic en una huella para seleccionarla.");
+        } else {
+            Alert.showAlert("ERROR", "Ninguna huella seleccionada", "Haz clic en una huella para seleccionarla.");
         }
-
     }
 
+    /**
+     * Reloads the huellas table and recalculates the total impact.
+     */
     private void reloadCalc() {
         setUpHuellas(huellas_ls);
         Double impact = 0.0;
-        for (Huella h: huellas_ls) {
+        for (Huella h : huellas_ls) {
             impact += calculateImpact(h);
         }
         impact_txt.setText(impact.toString());
     }
 
+    /**
+     * Handles the click on the "Guardar estadísticas" button.
+     */
     public void saveStats() {
         try {
             List<Huella> huellas = huellaService.build().findAll();
@@ -270,7 +307,4 @@ public class HuellasController extends Controller implements Initializable {
             e.printStackTrace();
         }
     }
-
-
-
 }

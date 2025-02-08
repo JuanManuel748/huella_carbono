@@ -7,12 +7,22 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service class for managing Usuario entities.
+ * Provides methods to perform CRUD operations and validation.
+ */
 public class usuarioService implements service<Usuario> {
     private String name;
     private String email;
     private String password;
     private LocalDate date;
 
+    /**
+     * Inserts a new Usuario entity into the database.
+     *
+     * @param entity the Usuario entity to be inserted.
+     * @return true if the insertion was successful.
+     */
     @Override
     public boolean insert(Usuario entity) {
         boolean inserted = false;
@@ -34,6 +44,12 @@ public class usuarioService implements service<Usuario> {
         return inserted;
     }
 
+    /**
+     * Updates an existing Usuario entity in the database.
+     *
+     * @param entity the Usuario entity to be updated.
+     * @return true if the update was successful.
+     */
     @Override
     public boolean update(Usuario entity) {
         boolean updated = false;
@@ -65,6 +81,12 @@ public class usuarioService implements service<Usuario> {
         return updated;
     }
 
+    /**
+     * Deletes an existing Usuario entity from the database.
+     *
+     * @param entity the Usuario entity to be deleted.
+     * @return true if the deletion was successful.
+     */
     @Override
     public boolean delete(Usuario entity) {
         boolean deleted = false;
@@ -97,6 +119,12 @@ public class usuarioService implements service<Usuario> {
         return deleted;
     }
 
+    /**
+     * Finds a Usuario entity by its primary key.
+     *
+     * @param pk the primary key of the Usuario entity to be found.
+     * @return the found Usuario entity, or null if not found.
+     */
     @Override
     public Usuario findByPK(Usuario pk) {
         Usuario result = null;
@@ -114,7 +142,11 @@ public class usuarioService implements service<Usuario> {
         return result;
     }
 
-
+    /**
+     * Finds all Usuario entities in the database.
+     *
+     * @return a list of all Usuario entities.
+     */
     @Override
     public List<Usuario> findAll() {
         List<Usuario> ls = new ArrayList<>();
@@ -126,6 +158,12 @@ public class usuarioService implements service<Usuario> {
         return ls;
     }
 
+    /**
+     * Validates a Usuario entity.
+     *
+     * @param entity the Usuario entity to be validated.
+     * @return true if the entity is valid.
+     */
     @Override
     public boolean validate(Usuario entity) {
         boolean result = false;
@@ -142,5 +180,12 @@ public class usuarioService implements service<Usuario> {
         return result;
     }
 
-    public static usuarioService build() {return new usuarioService();}
+    /**
+     * Builds a new instance of usuarioService.
+     *
+     * @return a new instance of usuarioService.
+     */
+    public static usuarioService build() {
+        return new usuarioService();
+    }
 }

@@ -54,10 +54,16 @@ public class RegisterController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
+    /**
+     * Changes the scene to the login view.
+     */
     public void goToLogin() throws Exception {
         App.currentController.changeScene(Scenes.LOGIN, null);
     }
 
+    /**
+     * Registers the user. It validates the fields and checks if the user exists in the database.
+     */
     public void register() {
         if (validate()) {
             try {
@@ -79,6 +85,11 @@ public class RegisterController extends Controller implements Initializable {
 
     }
 
+    /**
+     * Validates the fields. It checks if the fields are empty and if the email is valid.
+     *
+     * @return
+     */
     private boolean validate() {
         boolean result = false;
 

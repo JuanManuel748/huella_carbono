@@ -63,6 +63,9 @@ public class PerfilController extends Controller implements Initializable {
     }
 
 
+    /**
+     * Changes the scene to the register view.
+     */
     public void save() {
         Usuario u = Session.getInstance().getCurrentUser();
         if (validate()) {
@@ -82,6 +85,11 @@ public class PerfilController extends Controller implements Initializable {
 
     }
 
+    /**
+     * Validates the fields. It checks if the fields are empty and if the email is valid.
+     *
+     * @return true if the fields are valid, false otherwise.
+     */
     public boolean validate() {
         boolean result = false;
         String name = nameField.getText().toString();
@@ -98,6 +106,9 @@ public class PerfilController extends Controller implements Initializable {
         return result;
     }
 
+    /**
+     * Logs out the user. It closes the session and changes the scene to the welcome view.
+     */
     public void logout() throws Exception {
         Session.getInstance().logOut();
         App.currentController.changeScene(Scenes.WELCOME, null);

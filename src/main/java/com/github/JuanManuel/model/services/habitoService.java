@@ -10,6 +10,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service class for managing Habito entities.
+ * Provides methods to perform CRUD operations and validation.
+ */
 public class habitoService implements service<Habito> {
     private HabitoId id;
     private Usuario user;
@@ -18,6 +22,12 @@ public class habitoService implements service<Habito> {
     private String tipo;
     private LocalDate fecha;
 
+    /**
+     * Inserts a new Habito entity into the database.
+     *
+     * @param entity the Habito entity to be inserted.
+     * @return true if the insertion was successful.
+     */
     @Override
     public boolean insert(Habito entity) {
         boolean result = false;
@@ -44,6 +54,12 @@ public class habitoService implements service<Habito> {
         return result;
     }
 
+    /**
+     * Creates a new HabitoId for the given Habito entity.
+     *
+     * @param entity the Habito entity to create an ID for.
+     * @return the Habito entity with the new ID.
+     */
     private Habito createId(Habito entity) {
         Usuario tempUser = entity.getIdUsuario();
         tempUser = usuarioService.build().findByPK(tempUser);
@@ -55,16 +71,21 @@ public class habitoService implements service<Habito> {
         return entity;
     }
 
+    /**
+     * Updates an existing Habito entity in the database.
+     *
+     * @param entity the Habito entity to be updated.
+     * @return true if the update was successful.
+     */
     @Override
     public boolean update(Habito entity) {
         boolean result = false;
-
         try {
             if (entity.getId() != null) {
                 Habito tempHab = habitoDAO.build().findByPK(entity);
                 if (tempHab != null) {
                     if (validate(entity)) {
-                        if(habitoDAO.build().update(entity)) {
+                        if (habitoDAO.build().update(entity)) {
                             result = true;
                         }
                     }
@@ -76,13 +97,19 @@ public class habitoService implements service<Habito> {
         return result;
     }
 
+    /**
+     * Deletes an existing Habito entity from the database.
+     *
+     * @param entity the Habito entity to be deleted.
+     * @return true if the deletion was successful.
+     */
     @Override
     public boolean delete(Habito entity) {
         boolean result = false;
         try {
             if (entity.getId() != null) {
-                Habito tmepHab = habitoDAO.build().findByPK(entity);
-                if (tmepHab != null) {
+                Habito tempHab = habitoDAO.build().findByPK(entity);
+                if (tempHab != null) {
                     if (habitoDAO.build().delete(entity)) {
                         result = true;
                     }
@@ -94,6 +121,12 @@ public class habitoService implements service<Habito> {
         return result;
     }
 
+    /**
+     * Finds a Habito entity by its primary key.
+     *
+     * @param pk the primary key of the Habito entity to be found.
+     * @return the found Habito entity, or null if not found.
+     */
     @Override
     public Habito findByPK(Habito pk) {
         Habito result = new Habito();
@@ -107,6 +140,11 @@ public class habitoService implements service<Habito> {
         return result;
     }
 
+    /**
+     * Finds all Habito entities in the database.
+     *
+     * @return a list of all Habito entities.
+     */
     @Override
     public List<Habito> findAll() {
         List<Habito> ls = new ArrayList<>();
@@ -118,9 +156,14 @@ public class habitoService implements service<Habito> {
         return ls;
     }
 
+    /**
+     * Finds Habito entities by the associated Usuario.
+     *
+     * @param user the Usuario entity to search by.
+     * @return a list of Habito entities associated with the given Usuario.
+     */
     public List<Habito> findByUser(Usuario user) {
         List<Habito> ls = new ArrayList<>();
-
         try {
             if (user.getId() != null || user.getEmail() != null) {
                 Usuario tempUser = usuarioService.build().findByPK(user);
@@ -134,6 +177,14 @@ public class habitoService implements service<Habito> {
         return ls;
     }
 
+    /**
+     * Finds Habito entities by a date range and associated Usuario.
+     *
+     * @param min the start date of the range.
+     * @param max the end date of the range.
+     * @param currentUser the Usuario entity to search by.
+     * @return a list of Habito entities within the given date range and associated with the given Usuario.
+     */
     public List<Habito> findByDateRange(LocalDate min, LocalDate max, Usuario currentUser) {
         List<Habito> ls = new ArrayList<>();
         try {
@@ -151,10 +202,15 @@ public class habitoService implements service<Habito> {
         return ls;
     }
 
+    /**
+     * Validates a Habito entity.
+     *
+     * @param entity the Habito entity to be validated.
+     * @return true if the entity is valid.
+     */
     @Override
     public boolean validate(Habito entity) {
         boolean result = false;
-
         id = entity.getId();
         user = entity.getIdUsuario();
         act = entity.getIdActividad();
@@ -170,9 +226,12 @@ public class habitoService implements service<Habito> {
         return result;
     }
 
+    /**
+     * Builds a new instance of habitoService.
+     *
+     * @return a new instance of habitoService.
+     */
     public static habitoService build() {
         return new habitoService();
     }
-
-
 }

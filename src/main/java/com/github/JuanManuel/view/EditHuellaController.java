@@ -30,6 +30,10 @@ import java.util.ResourceBundle;
 import static com.github.JuanManuel.view.HuellasController.selected;
 import static javafx.collections.FXCollections.observableArrayList;
 
+/**
+ * Controller class for editing huellas.
+ * Provides methods for initializing the view, setting activities, saving huellas, and validating input.
+ */
 public class EditHuellaController extends Controller implements Initializable {
 
     @FXML
@@ -87,6 +91,11 @@ public class EditHuellaController extends Controller implements Initializable {
         setAct();
     }
 
+    /**
+     * Sets the current huella to the selected one.
+     *
+     * @param selected the selected huella.
+     */
     private void setHuella(Huella selected) {
         currentHuella = selected;
         currentAct = currentHuella.getIdActividad();
@@ -98,6 +107,9 @@ public class EditHuellaController extends Controller implements Initializable {
         date_input.setValue(currentHuella.getFecha());
     }
 
+    /**
+     * Sets the current activity to the selected one in the ComboBox.
+     */
     private void setAct() {
         currentAct = act_cho.getSelectionModel().getSelectedItem();
         Categoria tempCat = currentAct.getIdCategoria();
@@ -106,6 +118,11 @@ public class EditHuellaController extends Controller implements Initializable {
         preview_img.setImage(new Image(getClass().getResource("/com/github/JuanManuel/assets/img/acts/act_"+currentAct.getId()+".jpg").toExternalForm()));
     }
 
+    /**
+     * Saves the current huella to the database.
+     *
+     * @param actionEvent the event that triggered the action.
+     */
     public void save(ActionEvent actionEvent) {
         try {
             if (validate()) {
@@ -123,6 +140,11 @@ public class EditHuellaController extends Controller implements Initializable {
 
     }
 
+    /**
+     * Validates the input fields and sets the current huella object.
+     *
+     * @return true if the input is valid, false otherwise.
+     */
     private boolean validate() {
         boolean result = false;
         try {

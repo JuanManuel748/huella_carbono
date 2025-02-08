@@ -48,10 +48,16 @@ public class LoginController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
+    /**
+     * Changes the scene to the register view.
+     */
     public void goToRegister() throws Exception {
         App.currentController.changeScene(Scenes.REGISTER, null);
     }
 
+    /**
+     * Logs in the user. It validates the fields and checks if the user exists in the database.
+     */
     public void logIn() {
         try {
             String email = emailField.getText();
@@ -81,6 +87,13 @@ public class LoginController extends Controller implements Initializable {
 
     }
 
+    /**
+     * Validates the fields. It checks if the fields are empty.
+     *
+     * @param email the email to validate.
+     * @param password the password to validate.
+     * @return true if the fields are not empty, false otherwise.
+     */
     private boolean validateFields(String email, String password) {
         boolean rs = false;
         if (!email.isEmpty() && !password.isEmpty()) {

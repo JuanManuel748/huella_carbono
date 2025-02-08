@@ -24,6 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing habits.
+ * Provides methods for initializing the view, setting up tables, handling table selection, and performing CRUD operations on habits.
+ */
 public class HabitosController extends Controller implements Initializable {
 
     @FXML
@@ -54,7 +58,6 @@ public class HabitosController extends Controller implements Initializable {
     private List<Recomendacion> recom_ls = new ArrayList<>();
     private List<Categoria> cat_ls = new ArrayList<>();
 
-
     /**
      * Called when the view is opened. This method is intended for any setup or initialization
      * operations when the controller is first initialized. In this case, it's empty.
@@ -73,8 +76,6 @@ public class HabitosController extends Controller implements Initializable {
     @Override
     public void onClose(Object output) {}
 
-
-
     /**
      * Initializes the controller. This method is part of the Initializable interface and
      * is called when the controller is initialized.
@@ -89,16 +90,23 @@ public class HabitosController extends Controller implements Initializable {
         after_date.setValue(LocalDate.now());
     }
 
+    /**
+     * Sets up the tables with the data from the database.
+     */
     private void setupTables() {
         habitos_ls = habitoService.build().findByUser(Session.getInstance().getCurrentUser());
         setupHabitos(habitos_ls);
         setupRecoms(habitos_ls);
     }
 
+    /**
+     * Sets up the habitos table with the data from the database.
+     * @param ls the list of habits to display.
+     */
     private void setupHabitos(List<Habito> ls) {
         habitos_table.setItems(FXCollections.observableArrayList(habitos_ls));
         act_col.setCellValueFactory(cellData -> {
-            Habito h = (Habito) cellData.getValue();
+            Habito h = cellData.getValue();
             Actividad act = h.getIdActividad();
             act = actividadService.build().findByPK(act);
             return new SimpleStringProperty(act.getNombre());
@@ -108,19 +116,26 @@ public class HabitosController extends Controller implements Initializable {
         date_col.setCellValueFactory(new PropertyValueFactory<>("ultimaFecha"));
 
         habitos_table.setOnMouseClicked(event -> handleTableSelection(event));
-
-
     }
 
+    /**
+     * Sets up the recomendaciones table with the data from the database.
+     * @param ls the list of habits to extract categories from.
+     */
     private void setupRecoms(List<Habito> ls) {
         cat_ls = extractCats(ls);
         recom_ls = recomendacionService.build().findByCats(cat_ls);
-        // iniciar la tabla de recomendaciones
         recom_table.setItems(FXCollections.observableArrayList(recom_ls));
         desc_col.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         rec_imp_col.setCellValueFactory(new PropertyValueFactory<>("impactoEstimado"));
     }
 
+    /**
+     * Extracts the categories from a list of habitos.
+     *
+     * @param ls the list of habits to extract categories from.
+     * @return a list of categories.
+     */
     private List<Categoria> extractCats(List<Habito> ls) {
         List<Categoria> cats = new ArrayList<>();
         for (Habito h : ls) {
@@ -135,6 +150,11 @@ public class HabitosController extends Controller implements Initializable {
         return cats;
     }
 
+    /**
+     * Handles the selection of a row in the table.
+     *
+     * @param event the mouse event that triggered the selection.
+     */
     private void handleTableSelection(MouseEvent event) {
         try {
             if (event.getClickCount() == 1) {
@@ -142,8 +162,7 @@ public class HabitosController extends Controller implements Initializable {
                 List<Habito> tempLs = new ArrayList<>();
                 tempLs.add(selected);
                 setupRecoms(tempLs);
-                if (selected != null) {
-                } else {
+                if (selected == null) {
                     Alert.showAlert("ERROR", "Ningún producto seleccionado", "Haz clic en un producto para seleccionarlo.");
                 }
             }
@@ -152,12 +171,21 @@ public class HabitosController extends Controller implements Initializable {
         }
     }
 
-
+    /**
+     * Goes to the edit page.
+     *
+     * @throws Exception if an error occurs while loading the edit page.
+     */
     public void goToEdit() throws Exception {
         HomeController homeController = (HomeController) App.getController("home");
         homeController.loadPage("editHabito");
     }
 
+    /**
+     * Deletes the selected habit.
+     *
+     * @param actionEvent the event that triggered the action.
+     */
     public void delete(ActionEvent actionEvent) {
         if (selected != null && selected.getId() != null) {
             if (Alert.showConfirmation("¿Estás seguro de que quieres eliminar esta huella?", "Esta acción no se puede deshacer.")) {
@@ -166,11 +194,16 @@ public class HabitosController extends Controller implements Initializable {
                     habitos_table.setItems(FXCollections.observableArrayList(habitos_ls));
                 }
             }
-        }else {
-            Alert.showAlert("ERROR", "Ninguna huella seleccionado", "Haz clic en una huella para seleccionarla.");
+        } else {
+            Alert.showAlert("ERROR", "Ninguna huella seleccionada", "Haz clic en una huella para seleccionarla.");
         }
     }
 
+    /**
+     * Filters the habitos by date.
+     *
+     * @param actionEvent the event that triggered the action.
+     */
     public void filtHuellas(ActionEvent actionEvent) {
         LocalDate before = before_date.getValue();
         LocalDate after = after_date.getValue();
