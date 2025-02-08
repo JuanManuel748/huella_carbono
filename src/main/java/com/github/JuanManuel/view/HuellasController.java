@@ -252,7 +252,6 @@ public class HuellasController extends Controller implements Initializable {
             List<Huella> huellas = huellaService.build().findAll();
             String[] options = {"Sí", "No"};
             String confirmation = Alert.showChoice("¿Usar huellas de la tabla para calcular estadísticas?", options);
-            //confirmation = Alert.showConfirmation("Esto puede tardar unos segundos.", "¿Usar huellas de la tabla para calcular estadísticas?");
             if (confirmation.equalsIgnoreCase("Sí")) {
                 huellas = huellas_ls;
             } else if (confirmation.equalsIgnoreCase("No")) {
